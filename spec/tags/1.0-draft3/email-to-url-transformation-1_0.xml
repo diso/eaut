@@ -1,0 +1,1216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="./rfc2629.xslt" ?>
+<!-- ***** File Inclusion ***** -->
+<!-- The parameter value is the name of the file to be included which can also be a URI.
+	In the case of local files the XML_LIBRARY environment variable provides a search
+	path of directories in which the file may be located. See section 4.1.2 of README -->
+<!-- include="n/a" -->
+
+<!-- ***** Rigor Control ***** -->
+<!-- Try to enforce the ID-nits conventions and DTD validity -->
+<?rfc strict="yes" ?>
+
+<!-- ***** Rendering Control ***** -->
+<!-- Put the famous header block on the first page -->
+<?rfc topblock="yes" ?>
+<!-- Include boilerplate from Section 10.4(d) of [1] (Bradner, S., "The Internet Standards
+	Process - Revision 3," October 1996.) -->
+<?rfc iprnotified="no" ?>
+
+<!-- Use anchors as symbolic tags rather than numbers for references -->
+<?rfc symrefs="yes" ?>
+<!-- Sort references according to symbolic tags - irrelevant if symrefs="no" -->
+<?rfc sortrefs="yes" ?>
+
+<!-- Items useful for reviewing document -->
+<!-- Render <cref> information -->
+<?rfc comments="no" ?>
+<!-- If comments is "yes", then render comments inline; otherwise render them in an
+	"Editorial Comments" section" -->
+<?rfc inline="no" ?>
+<!-- Insert editing marks for ease of discussing draft versions.
+	Editing marks are strings such as <29> printed at the beginning of the blank line before
+	each paragrpah of text. -->
+<?rfc editing="no" ?>
+
+<!-- Items useful when using xml2rfc to produce technical documents other than RFCs and I-Ds -->
+<!-- Produce a private memo rather than an RFC or Internet-Draft.
+	The value of the PI is used as the title of the document.
+	Omits the topblock and standard boiler plate when . -->
+<?rfc private="Draft" ?>
+<!-- Override the center footer string -->
+<?rfc footer="" ?>
+<!-- Override the leftmost header string -->
+<?rfc header="" ?>
+
+<!-- ***** Table of Contents Control ***** -->
+<!-- Generate a table-of-contents -->
+<?rfc toc="yes" ?>
+<!-- Control whether the word "Appendix" appears in the table of contents. -->
+<?rfc tocappendix="yes" ?>
+<!-- If toc is "yes", then this determines the depth of the table of contents. -->
+<?rfc tocdepth="3" ?>
+<!-- If toc is "yes", then setting this to "yes" will indent subsections in
+	the table-of-contents. -->
+<?rfc tocindent="yes" ?>
+<!-- If toc is "yes", then setting this to "no" will make it a little less compact. -->
+<?rfc tocompact="yes" ?>
+<!-- Affects horizontal spacing in the table-of-content. -->
+<?rfc tocnarrow="yes" ?>
+
+<!-- ***** Format Control ***** -->
+<!-- Automatically force page breaks to avoid widows and orphans (not perfect). -->
+<?rfc autobreaks="yes" ?>
+<!-- Put two spaces instead of one after each colon (":") in txt or nroff files. -->
+<?rfc colonspace="no" ?>
+<!-- When producing a txt/nroff file, try to conserve vertical whitespace
+	(the default value was "no" up to v1.30; from v1.31 the default is the current value
+	of the rfcedstyle PI).
+	Will default to (rfcedstyle) in future. -->
+<?rfc compact="no" ?>
+<!-- If compact is "yes", then you can make things a little less compact by setting this
+	to "no" (the default value is the current value of the compact PI). -->
+<?rfc subcompact="no" ?>
+<!-- An integer hint indicating how many contiguous lines are needed at this point in
+	the output.
+	Can appear as many times as necessary in the source. -->
+<!--  needLines="0" -->
+
+<!-- ***** HTML Specials ***** -->
+<!-- When producing a html file, use the image in this file.  -->
+<?rfc background="" ?>
+<!-- Automatically replaces input sequences such as |*text| by,
+	e.g., <strong>text</strong> in html output. -->
+<?rfc emoticonic="no" ?>
+<!-- Generate mailto: URL, as appropriate. -->
+<?rfc linkmailto="yes" ?>
+<!-- When producing a html file, produce multiple files for a slide show. -->
+<?rfc slides="no" ?>
+<!-- When producing a html file, use the <object> html element with inner replacement content
+	instead of the <img> html element, when a source xml element includes an src attribute. -->
+<?rfc useobject="no" ?>
+
+<!-- ***** Debugging ***** -->
+<!-- Value is a string like "35:file.xml" or just "35" (file name then defaults to the
+	containing file's real name or to the latest linefile specification that changed it) that
+	will be used to override xml2rfc's reckoning of the current input position
+	(right after this PI) for warning and error reporting purposes
+	(line numbers are 1-based)" -->
+<!-- linefile="n/a" -->
+<!-- During processing pass 2, print the value to standard output at that point
+	in processing" -->
+<!-- typeout="n/a" -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc2119 PUBLIC "" 
+"http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+]>
+
+<rfc category="std" ipr="full3978"
+	docName="email-to-url-transformation-1_0-03.xml">
+	<front>
+		<title abbrev="EAUT">
+			Email Address to URL Transformation 1.0 - Draft 3
+		</title>
+
+		<author initials="D.F." surname="Fuelling"
+			fullname="David Fuelling">
+			<organization abbrev="Sappenin Technologies">
+				Sappenin Technologies, LLC
+			</organization>
+			<address>
+				<postal>
+					<street></street>
+					<city>Salt Lake City</city>
+					<region>UT</region>
+					<code>84117</code>
+					<country>USA</country>
+				</postal>
+				<email>sappenin@gmail.com</email>
+				<uri>http://www.sappenin.com</uri>
+			</address>
+		</author>
+
+		<date month="June" year="2008" />
+
+		<abstract>
+			<t>
+				Email Address to URL Transformation (EAUT) defines a 
+				mechanism for transforming an RFC2822 "addr-spec" email 
+				address into an associated URL.  The transform options 
+				outlined in this document are designed to be flexible 
+				enough such that every DNS domain-owner can specify 
+				unlimited email address to URL transformations that 
+				services can easily discover and utilize in their 
+				URL-based transactions.
+			</t>
+		</abstract>
+	</front>
+
+	<middle>
+		<section title="Requirements Notation">
+			<t>
+				The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+				"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",
+				"MAY", and "OPTIONAL" in this document are to be
+				interpreted as described in
+				<xref target="RFC2119" />
+				.
+			</t>
+		</section>
+
+		<section title="Terminology" anchor="terminology">
+			<t>
+				The terminology definitions are broken up into two
+				sub-categories: Existing and New terminology.
+			</t>
+
+			<section title="Existing Terminology">
+				<t>
+					The following terminology is specified in
+					<xref target="OpenID.authentication-2.0">
+						OpenID Authentication 2.0
+					</xref>
+					, and is reproduced here for reference throughout
+					this document.
+				</t>
+				<t>
+					<list style="hanging">
+						<t hangText="Relying Party:">
+							RP. A Web application that wants proof that
+							the end user controls an Identifier.
+						</t>
+
+						<t hangText="OpenID Provider:">
+							OP. An OpenID Authentication server on which
+							a Relying Party relies for an assertion that
+							the end user controls an Identifier.
+						</t>
+
+						<t hangText="OP Endpoint URL:">
+							The URL which accepts OpenID Authentication
+							requests, obtained by performing discovery
+							on the the User-Supplied Identifier. This
+							value MUST be an absolute URL.
+						</t>
+						<t hangText="Claimed Identifier:">
+							An Identifier that the end user claims to
+							own; the overall aim of the OpenID
+							Authentication 2.0 protocol is verifying
+							this claim. The Claimed Identifier is
+							either:
+							<list style="symbols">
+								<t>
+									The Identifier obtained by
+									<eref
+										target="http://openid.net/specs/openid-authentication-2_0.html#normalization">
+										normalizing
+									</eref>
+									the User-Supplied Identifier, if it
+									was an URL.
+								</t>
+								<t>
+									The
+									<eref
+										target="http://openid.net/specs/openid-authentication-2_0.html#canonicalid">
+										CanonicalID
+									</eref>
+									, if it was an XRI.
+								</t>
+							</list>
+						</t>
+
+					</list>
+				</t>
+
+			</section>
+
+
+			<section title="New Terminology">
+				<t>
+					The following is new terminology for this 
+					specification.
+				</t>
+
+				<t>
+					<list style="hanging">
+
+						<t hangText="Processing-Agent">
+							An agent (e.g, a computer program) 
+							attempting to perform an Email Address to URL 
+							Transform operation.
+						</t>
+						<t hangText="Email Address:">
+							An RFC2822 "addr-spec" compatible email
+							address that can be used in the Email
+							Address to URL Transformation protocol. This
+							address consists of a "local-part" and a 
+							"domain" part, separated by an "@" sign.
+						</t>
+						<t hangText="Discovery Endpoint URL:">
+							A URL that can be dereferenced to obtain an
+							XRDS-Simple document listing the supported
+							transformation mechanisms for a particular
+							email address. This URL is formed by taking
+							the "domain" portion of a Email Address, 
+							and following the steps outlined in
+							<xref
+								target="obtaining-discovery-endpoint">
+								Determining the EAUT Discovery Endpoint
+								URL
+							</xref>
+							.
+						</t>
+						<t
+							hangText="Email Address To URL Tranformation Mapping Service (EAUT Mapping Service)">
+							A web-based service that accepts a
+							particular Email Address, and
+							returns a 302 redirect to an URL.
+						</t>
+						<t hangText="EAUT Mapping Service Endpoint URL">
+							A URL where a particular EAUT Mapping Service can
+							be accessed.
+						</t>
+						<t
+							hangText="Email Address to URL Transformation Template (EAUT Template)">
+							A URL, containing zero or more Wildcard
+							Replacement Tokens.
+						</t>
+						<t hangText="Wildcard Replacement Token">
+							A string surrounded by an opening-brace and
+							a closing-brace, in that order (such as
+							[username]). The Wildcard Replacement Token
+							is used inside of an EAUT Template to designate 
+							how associated URLs are structured.
+						</t>
+
+					</list>
+				</t>
+
+			</section>
+		</section>
+
+
+
+
+		<section title="Protocol Overview ">
+			<t>
+				<list style="numbers">
+					<t>
+						An Email Address is presented to the
+						Processing-Agent.
+					</t>
+					<t>
+						The Processing-Agent performs
+						<xref target="discovery">discovery</xref>
+						on the Email Address and retrieves
+						an XRDS-Simple document containing one or more
+						values representing an EAUT Template
+						and/or an EAUT Mapping Service Endpoint URL.
+					</t>
+					<t>
+						(Optional) If an EAUT Template is found, it can be used to
+						<xref target="eaut_template_transformation">
+							transform
+						</xref>
+						the Email Address into an URL.
+					</t>
+					<t>
+						(Optional) If an EAUT Mapping Service Endpoint is
+						found, it can be used to query the EAUT Mapping
+						Service to determine the URL associated with 
+						the supplied Email Address.
+					</t>
+					<t>
+						The resulting URL can then be used as an 
+						equivalent identifier for the Email Address in 
+						URL-based transactions.
+					</t>
+				</list>
+			</t>
+		</section>
+
+		<section
+			title="Recommended Usage in OpenID Authentication 2.0">
+			<t>
+				This protocol extension results in an OpenID Identifier
+				that can be utilized by a Relying Party to initiate
+				OpenID Authentication.
+
+				<vspace blankLines="1" />
+				Traditionally, OpenID Authentication 2.0 allows a
+				User-Supplied Identifier to be an Identifier that is
+				presented by the end user to the Relying Party, or
+				selected by the user at the OpenID Provider. During the
+				initiation phase of the OpenID 2.0 Authentication
+				protocol, an end user may enter either their own
+				Identifier or an OP Identifier. If an OP Identifier is
+				used, the OP may then assist the end user in selecting
+				an Identifier to share with the Relying Party.
+				<vspace blankLines="1" />
+
+				Using this extension, OpenID Relying parties can extend
+				the definition of a User-Supplied Identifier to include
+				an Email Identifier as follows:
+				<vspace blankLines="1" />
+				A User-Supplied Identifier is an OpenID Identifier or
+				Email Identifier that was presented by the end user to
+				the Relying Party, or an Identifier selected by the user
+				at the OpenID Provider. During the initiation phase of
+				the protocol, an end user may enter either their own
+				Identifier, an OP Identifier, or an Email Identifier. If
+				an OP Identifier is used, the OP may then assist the end
+				user in selecting an Identifier to share with the
+				Relying Party. If an Email Identifier is used, this
+				identifier will be transformed into its corresponding
+				OpenID URL or OpenID XRI, and used as a traditional
+				User-Supplied Identifier in OpenID 2.0 Authentication.
+
+			</t>
+
+		</section>
+
+		<section title="EAUT Discovery" anchor="discovery">
+
+			<t>
+				EAUT Discovery is the process by which a Processing
+				Agent utilizes a Discovery Endpoint URL to look up
+				("discover") the information necessary for transforming
+				an Email Address into an URL. This protocol has only one 
+				path through which to do discovery:
+			</t>
+
+			<t>
+				<list style="numbers">
+					<t>
+						The
+						<xref target="XRDS-Simple">XRDS-Simple</xref>
+						SHALL be attempted on the EAUT Discovery
+						Endpoint URL. If it succeeds, the result is an
+						XRDS-Simple document that contains the necessary
+						information for the protocol to continue. If
+						more than one applicable Service Element is
+						returned in the XRDS-Simple document, the
+						precedence rules defined in [XRI_Resolution_2.0]
+						are to be applied.
+					</t>
+				</list>
+			</t>
+
+			<t>
+				If the XRDS-Simple protocol fails for any reason (e.g., no
+				valid XRDS-Simple document is retrieved, or no valid
+				<xref target="valid_service_type_elements">
+					Service Elements
+				</xref>
+				are found in the XRDS-Simple document), then discovery
+				is considered to have failed for the supplied EAUT
+				Discovery Endpoint URL.
+			</t>
+
+			<section title="Determining the EAUT Discovery Endpoint URL"
+				anchor="obtaining-discovery-endpoint">
+				<t>
+					In order to obtain a Discovery Endpoint URL from an
+					Email Address, the following process MUST be followed:
+				</t>
+				<t>
+					<list style="numbers">
+						<t>
+							Parse the Email Address using the
+							"at sign" ("@" ASCII #40) as a delimiter.
+							The result of this parsing operation SHOULD
+							be two tokens, the second of which will be
+							the "domain" of the Email Address as defined
+							by RFC2822, section 3.4.1. (The first token
+							will be the "local-part" as defined by
+							RFC2822). The first token SHOULD be
+							discarded, leaving the second token, which
+							is the "domain".
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							Using the "domain" result from the first
+							step, prepend the string "http://" to it.
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							The resulting URL is a valid EAUT Discovery
+							Endpoint URL, and can be used to perform
+							EAUT Discovery.
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							If EAUT Discovery is not successful on the
+							EAUT Discovery Endpoint URL obtained in the
+							step above (i.e., no XRDS-Simple document is
+							found, or no valid Service Elements are
+							found in the XRDS-Simple document), then a
+							new URL should be assembled by starting with
+							the "domain" result from the first step, and
+							prepending the string "http://www." to it.
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							The resulting URL is a valid EAUT Discovery
+							Endpoint URL and can be used to perform EAUT
+							Discovery. If EAUT Discovery is again
+							unsuccessful on this final Endpoint URL,
+							then Email Address Transformation is not
+							possible with the supplied Email Address.
+							The Processing Agent SHOULD treat the
+							supplied Email Address as it would any other
+							invalid user-supplied identifier.
+						</t>
+
+					</list>
+				</t>
+			</section>
+
+			<section title="Discovered Information"
+				anchor="discovered_info">
+				<t>
+					Upon successful completion of EAUT Discovery, the
+					Processing Agent will have an XRDS-Simple document
+					containing the Email Address to URL Transform Protocol
+					version, as well as one or more of the following
+					pieces of information:
+
+					<list style="symbols">
+						<t>EAUT Template</t>
+						<t>EAUT Mapping Service Endpoint URL</t>
+					</list>
+				</t>
+			</section>
+
+			<section title="XRDS-Based Discovery">
+				<t>
+					If XRDS-Simple discovery was successful, the result will
+					be an XRDS-Simple Document, which is defined in
+					[XRDS-Simple]. This is an XML document with entries
+					for services that are related to the Email Address.
+				</t>
+				<section title="Valid Service Type Elements"
+					anchor="valid_service_type_elements">
+					<t>
+						For non-normative examples of XRDS-Simple
+						Service Elements supported by this protocol, see
+						the
+						<xref target="XRDS_Simple_Sample">
+							XRDS Examples
+						</xref>
+						section.
+					</t>
+
+					<section title="Service Type: EAUT Template">
+						<t>
+							An EAUT Template element is an &lt;xrd:Service&gt; element
+							with the following information:
+
+							<list style="symbols">
+								<t>
+									An &lt;xrd:Type&gt; tag whose text
+									content is
+									"http://specs.openid.net/oeat/1.0/ett".
+								</t>
+
+								<t>
+									An &lt;xrd:URI&gt; tag whose text
+									content is an EAUT Template.
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="Service Type: EAUT Mapping Service">
+						<t>
+							An EAUT Mapping Service element is an
+							&lt;xrd:Service&gt; element with the
+							following information:
+
+							<list style="symbols">
+								<t>
+									An &lt;xrd:Type&gt; tag whose text
+									content is
+									"http://specs.openid.net/oeat/1.0/eatoid".
+								</t>
+
+								<t>
+									An &lt;xrd:URI&gt; tag whose text
+									content is an an EAUT Mapping Service 
+									Endpoint URL.
+								</t>
+							</list>
+						</t>
+					</section>
+
+
+
+
+				</section>
+				<section
+					title="Extracting the EAUT Template or EAUT Mapping Service Endpoint URL"
+					anchor="extracting_auth">
+					<t>
+						Once the Processing Agent has obtained an XRDS
+						document, it MUST first search the document
+						(following the rules described in
+						[XRI_Resolution_2.0]) for either an EAUT Template or an 
+						EAUT Mapping Service Endpoint URL. If neither of 
+						these are found, then the EAUT protocol fails.
+					</t>
+				</section>
+
+			</section>
+
+
+		</section>
+
+
+		<section title="Transforming an Email Address using an EAUT Template"
+			anchor="eaut_template_transformation">
+
+			<t>
+				In order to transform a Email Address into an URL, a Processing 
+				Agent may utilize a valid EAUT Template. This section details
+				the structure of the EAUT Template, as well as the steps necessary
+				to transform an Email Address into an URL using an EAUT Template.
+			</t>
+
+			<section title="EAUT Template Structure" anchor="eaut_template_structure">
+				<t>
+					An EAUT Template is an absolute URL that contains zero 
+					or more Wildcard Replacement Fields, each of which are 
+					textual character(s) surrounded by an opening-bracket 
+					("[" ASCII #5B ) on the left, and a closing-bracket 
+					("]" ASCII #5D) on the right.
+					<vspace blankLines="1" />
+					As of this version of the Transform protocol, the
+					only allowed replacement field is "username".
+					<vspace blankLines="1" />
+					Because the "opening-bracket" and "closing-bracket"
+					characters are prohibited by the URI syntax, these
+					characters MUST be percent-encoded per section 2.1
+					of the URI Specification before being included in an
+					XRDS document.
+				</t>
+			</section>
+
+			<section title="EAUT Template Validity" anchor="eaut_template_validity">
+
+				<section title="Valid EAUT Template" anchor="valid_eaut_template">
+					<t>
+						An EAUT Template is considered to be valid if it 
+						is either a valid URL, or a URL with a Wildcard 
+						Replacement Field as allowed by this protocol. 
+						Currently, only the [username] Wildcard Replacement 
+						Field is defined and allowed.
+					</t>
+				</section>
+				<section title="Invalid EAUT Template" anchor="invalid_eaut_template">
+					<t>
+						An EAUT Template is considered to be invalid if the 
+						EAUT Template has any of the following properties:
+						<list style="symbols">
+							<t>
+								It contains more than one of either kind
+								of bracket.
+							</t>
+							<t>
+								It contains an odd number of brackets.
+							</t>
+						</list>
+
+						An invalid EAUT Template MUST NOT be used in an Email
+						Address Transform operation.
+					</t>
+				</section>
+			</section>
+
+			<section title="EAUT Template Transform Procedure"
+				anchor="eaut_template_transform_procedure">
+				<t>
+					If the valid EAUT Template does not contain any Wildcard 
+					Replacement Fields, then the transform is complete: The 
+					EAUT Template is the URL, and this transform protocol ends.
+					<vspace blankLines="1" />
+					However, if the EAUT Template does contain a Wildcard
+					Replacement Field, then the following procedure is
+					used to transform the Email Address into an URL using an 
+					EAUT Template:
+				</t>
+
+				<t>
+					<list style="numbers">
+						<t>
+							Tokenize the Email Address using the "at sign" 
+							("@" ASCII #40) as a delimeter. The result of 
+							this parsing operation SHOULD be two tokens, the 
+							first of which will be the "local-part" of the Email
+							Address as defined by RFC2822, section 3.4.1. 
+							(The second token will be the "domain").
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							The EAUT Template should be percent-decoded per
+							section 2.1 of the URI specification.
+							Specifically, %5B should be decoded to be
+							the opening-bracket, while %5D should be
+							decoded to be the closing bracket, but only
+							where these two characters surround a valid
+							Wildcard Replacement String (such as
+							"username").
+							<vspace blankLines="1" />
+						</t>
+						<t>
+							Next, in the EAUT Template replace the portion of the
+							EAUT Template that contains "[username]" (excluding
+							single-quotes) with the value of the
+							"local-part" portion of the email address.
+							<vspace blankLines="1" />
+						</t>
+
+					</list>
+				</t>
+			</section>
+		</section>
+
+		<section
+			title="Transforming an Email Address using an EAUT Mapping Service"
+			anchor="eaut_mapping_transformation">
+
+			<t>
+				In order to transform a Email Address into an
+				URL, Processing Agents may utilize an EAUT Mapping Service. 
+				This section details how Processing Agents can access such 
+				service endpoints, and the expected results that MUST be
+				returned.
+			</t>
+
+			<section title="EAUT Mapping Service Query"
+				anchor="eaut_mapping_service_query">
+				<t>
+					In order to query an EAUT Mapping Service, a Processing
+					Agent SHOULD issue an HTTP GET request on the EAUT Mapping
+					Service's Endpoint URL. The GET request must contain
+					an attribute named "email", with the Email Address as the 
+					value of this attribute. If more than one "email" 
+					attribute is specified in the GET query, then EAUT Mapping 
+					Service Endpoints SHOULD utilize only the first attribute 
+					in the query string. See Appendix A.4 for a non-normative 
+					example of an EAUT Mapping Service Query.
+				</t>
+			</section>
+			<section title="EAUT Mapping Service Result"
+				anchor="eaut_mapping_service_result">
+				<t>
+					After receiving an EAUT Mapping Service Query, an EAUT
+					Mapping Service MUST return an HTTP 302 redirect to an 
+					appropriately mapped URL.
+				</t>
+			</section>
+		</section>
+
+		<section title="Security Considerations">
+			<section title="Man-in-the-Middle Attacks">
+				<t>
+					If DNS resolution or the transport layer is
+					compromised, this protocol is not fully secure since
+					the attacker can impersonate the Discovery Endpoing URL 
+					and tamper with the discovery process. If an attacker can 
+					tamper with the discovery process he/she can specify any
+					URL, and so does not have to impersonate the mapped URL.
+					Additionally, if an attacker can compromise the
+					integrity of the information returned during the
+					discovery process, by altering the XRDS document,
+					the need for a man in the middle is removed. In such
+					an attack, a forged EAUT Template or forged EAUT Mapping 
+					Service Endpoint URL could be returned. One method to 
+					prevent this sort of attack is by digitally signing the 
+					XRDS file as per <xref target="RFC3275">XMLDSIG</xref>.
+					The keying material is not specified, since the Processing 
+					Agent ultimately needs to make its own decision whether to
+					trust keys used for such a signature.
+				</t>
+
+				<t>
+					Using SSL with certificates signed by a trusted
+					authority prevents these kinds of attacks by
+					verifying the results of the DNS look-up against the
+					certificate. Once the validity of the certificate
+					has been established, tampering is not possible.
+					Impersonating an SSL server requires forging or
+					stealing a certificate, which is significantly
+					harder than the network based attacks.
+				</t>
+
+				<t>
+					In order to get protection from SSL, SSL must be
+					used for all parts of this protocol, While the
+					protocol does not require SSL be used, its use is
+					strongly RECOMMENDED. Current best practices dictate
+					that Discovery Endpoint URL SHOULD use SSL, with a 
+					certificate signed by a trusted authority, to secure its 
+					Endpoint URL as well as the interactions with the Processing
+					Agent.  Following its own security policies, a Processing
+					Agent MAY choose to not complete, or even begin, a 
+					transaction if SSL is not being correctly used at the
+					Discovery Endpoint URL.
+				</t>
+			</section>
+			<section title="EAUT Mapping Email-Address Harvesting Attack"
+				anchor="eaut_mapping_service_email_address_harvesting_attack">
+				<t>
+					EAUT Mapping Service Endpoints may be prone to an email
+					address harvesting attack if the EAUT Mapping Service
+					returns different HTTP codes for different email
+					addresses. For example, if an EAUT Mapping Service
+					determines that a particular email address is not
+					actually in use, and then returns a special result
+					message to indicate this, an attacker could utilize
+					this information in order to determine if a
+					particular email address is valid or not for a
+					particular domain.
+
+					Thus, in order to reduce the risk of email address
+					harvesting attacks, an EAUT Mapping Service should always
+					redirect to a well-formed URL, even if the system is
+					unable to verify that supplied email address actually 
+					corresponds to a valid user.  In this way, an attacker 
+					will not be able to determine if a particular email 
+					address is actually registered with the EAUT Mapping 
+					Service.
+				</t>
+			</section>
+			<section title="OP Email-Address Harvesting Attack"
+				anchor="op_email_address_harvesting_attack">
+				<t>
+					OP's should be careful to always resolve a
+					particular OpenID URL, even if that OpenID URL is
+					not a valid OpenID in the OP system. If a particular
+					OP does not resolve *all* OpenID Identifier URL's,
+					then an email address harvesting attack could
+					utilize an EAUT Service Endpoint to determine which
+					email addresses correspond to valid OpenID
+					Identifiers, thus increasing the value of harvested
+					email addresses. This recomendation holds true
+					outside of this specification, although it is
+					highlighted here because EAUT can exacerbate this
+					problem by possibly connecting an email address to a
+					particular OpenID Identifier URL.
+				</t>
+			</section>
+		</section>
+		<section title="Acknowledgements">
+			<t>
+				Textual portions of the OpenID Authentication 2.0 and
+				XML portions of the OpenID Attribute Exchange 1.0
+				specifications were used in the creation of this
+				extension document.
+			</t>
+		</section>
+
+		<appendix title="Examples">
+			<t>Non-normative</t>
+
+			<appendix title="EAUT Template Examples" anchor="eaut_template_example">
+				<figure>
+					<artwork><![CDATA[https://[username].example.com/]]></artwork>
+				</figure>
+				<figure>
+					<artwork><![CDATA[https://www.example.com/server/[username]]]></artwork>
+				</figure>
+			</appendix>
+			<appendix title="XRDS Service Element Examples"
+				anchor="XRDS_Simple_Sample">
+
+				<appendix title="EAUT Template Service Element Example 1"
+					anchor="eaut_template_sample_1">
+					<figure>
+						<preamble>
+							For an Email Address "beth@example.com" to 
+							transform to the URL "https://beth.example.com", 
+							the following XML snippet should be present in
+							the the XRDS file when discovery is preformed on 
+							"https://example.com/" or "https://www.example.com":
+						</preamble>
+						<artwork>
+							<![CDATA[
+<Service xmlns="xri://$xrd*($v*2.0)">
+  <Type>http://specs.openid.net/oeat/1.0/ett</Type>
+  <URI>https://%5Busername%5D.example.com/</URI>
+</Service>
+]]>
+						</artwork>
+					</figure>
+				</appendix>
+
+				<appendix title="EAUT Template Service Element Example 2"
+					anchor="eaut_template_sample_2">
+					<figure>
+						<preamble>
+							For an Email Address "beth@example.com" to 
+							transform to the URL
+							"https://www.example.com/openid/personas/beth",
+							the following XML snippet should be present
+							in the the XRDS file when discovery is
+							preformed on "https://example.com/" or
+							"https://www.example.com":
+						</preamble>
+						<artwork>
+							<![CDATA[
+<Service xmlns="xri://$xrd*($v*2.0)">
+  <Type>http://specs.openid.net/oeat/1.0/ett</Type>
+  <URI>https://www.example.com/openid/personas/%5Busername%5D/</URI>
+</Service>
+]]>
+						</artwork>
+					</figure>
+				</appendix>
+
+				<appendix title="EAUT Template Service Element Example 3"
+					anchor="eaut_template_sample_3">
+					<figure>
+						<preamble>
+							For all Email Addresses "*@example.com" to 
+							use the URL "https://www.example.com/",
+							the following XML snippet should be present
+							in the the XRDS file when discovery is
+							preformed on "https://example.com/" or
+							"https://www.example.com":
+						</preamble>
+						<artwork>
+							<![CDATA[
+<Service xmlns="xri://$xrd*($v*2.0)">
+  <Type>http://specs.openid.net/oeat/1.0/ett</Type>
+  <URI>https://www.example.com/</URI>
+</Service>
+]]>
+						</artwork>
+					</figure>
+				</appendix>
+			</appendix>
+
+			<appendix title="EAUT Mapping Service Element Example"
+				anchor="eaut_mapping_query_example">
+				<figure>
+					<preamble>
+						The following is an example HTTP GET request
+						that could be made to an EAUT Mapping Service 
+						Endpoint URL  to determine the URL for 
+						an Email Address of "beth@example.com".
+					</preamble>
+					<artwork>
+						<![CDATA[
+GET /eaut_mapper/?email%3Dbeth@example.com HTTP/1.1
+Date: Wed, 08 Jun 2008 04:06:18 GMT
+Host: example.com		
+]]>
+					</artwork>
+				</figure>
+
+				<figure>
+					<preamble>
+						The following is an example response containing 
+						a 302 redirect code for the above reqest:
+					</preamble>
+					<artwork>
+						<![CDATA[
+HTTP/1.1 302 Found
+Location: http://openid.example.com/people/beth
+]]>
+					</artwork>
+				</figure>
+
+			</appendix>
+		</appendix>
+
+	</middle>
+
+	<back>
+		<references title="Normative References">
+			<reference anchor="RFC2119">
+				<front>
+					<title>
+						Key words for use in RFCs to Indicate
+						Requirement Levels
+					</title>
+					<author initials="S" surname="Bradner"
+						fullname="Scott Bradner">
+						<organization>Alis Technologies</organization>
+					</author>
+				</front>
+				<seriesInfo name="RFC" value="2119" />
+			</reference>
+			<reference anchor="XRI_Resolution_2.0"
+				target="http://www.oasis-open.org/committees/download.php/17293">
+				<front>
+					<title>
+						Extensible Resource Identifier (XRI) Resolution
+						V2.0 - Working Draft 10
+					</title>
+					<author initials="G.W" surname="Wachob"
+						fullname="Gabe Wachob">
+						<organization>Visa International</organization>
+					</author>
+					<author initials="D.R" surname="Reed"
+						fullname="Drummond Reed">
+						<organization>Cordance</organization>
+					</author>
+					<author initials="L.C" surname="Chasen"
+						fullname="Les Chasen">
+						<organization>NeuStar</organization>
+					</author>
+					<author initials="W.T" surname="Tan"
+						fullname="William Tan">
+						<organization>NeuStar</organization>
+					</author>
+					<author initials="S.C" surname="Churchill"
+						fullname="Steve Churchill">
+						<organization>XDI.ORG</organization>
+					</author>
+				</front>
+				<format type="PDF"
+					target="http://www.oasis-open.org/committees/download.php/17293" />
+			</reference>
+			<reference anchor="XRI_Syntax_2.0"
+				target="http://www.oasis-open.org/committees/download.php/15376">
+				<front>
+					<title>
+						Extensible Resource Identifier (XRI) Syntax V2.0
+					</title>
+					<author initials="D.R" surname="Reed"
+						fullname="Drummond Reed">
+						<organization>Cordance</organization>
+					</author>
+					<author initials="D.M" surname="McAlpin"
+						fullname="Dave McAlpin">
+						<organization>Epok</organization>
+					</author>
+				</front>
+				<format type="HTML"
+					target="http://www.oasis-open.org/committees/download.php/15376" />
+				<format type="PDF"
+					target="http://www.oasis-open.org/committees/download.php/15377" />
+			</reference>
+			<reference anchor="RFC2616">
+				<front>
+					<title>
+						Hypertext Transfer Protocol -- HTTP/1.1
+					</title>
+					<author initials="R.F" surname="Fielding"
+						fullname="R. Fielding">
+						<organization>UC Irvine</organization>
+					</author>
+					<author initials="J.G" surname="Gettys"
+						fullname="J. Gettys">
+						<organization>Compaq/W3C</organization>
+					</author>
+					<author initials="J.M" surname="Mogul"
+						fullname="J. Mogul">
+						<organization>Compaq</organization>
+					</author>
+					<author initials="H.F" surname="Frystyk"
+						fullname="H. Frystyk">
+						<organization>W3C/MIT</organization>
+					</author>
+					<author initials="L.M" surname="Masinter"
+						fullname="L. Masinter">
+						<organization>Xerox</organization>
+					</author>
+					<author initials="P.L" surname="Leach"
+						fullname="P. Leach">
+						<organization>Microsoft</organization>
+					</author>
+					<author initials="T.L" surname="Berners-Lee"
+						fullname="T. Berners-Lee">
+						<organization>W3C/MIT</organization>
+					</author>
+				</front>
+				<seriesInfo name="RFC" value="2616" />
+			</reference>
+			<reference anchor="RFC2822">
+				<front>
+					<title>Internet Message Format</title>
+					<author initials="P.W.R" surname="Resnick"
+						fullname="Peter W. Resnick">
+						<organization>
+							QUALCOMM Incorporated
+						</organization>
+					</author>
+				</front>
+				<seriesInfo name="RFC" value="2822" />
+			</reference>
+			<reference anchor="ASCII">
+				<front>
+					<title>
+						The ASCII subset of the Unicode Standard 5.0
+					</title>
+					<author fullname="The Unicode Consortium">
+						<organization>
+							The Unicode Consortium
+						</organization>
+					</author>
+				</front>
+				<format type="PDF"
+					target="http://www.unicode.org/charts/PDF/U0000.pdf" />
+			</reference>
+
+
+			<reference anchor="RFC3986">
+				<front>
+					<title>
+						Uniform Resource Identifier (URI): Generic
+						Syntax
+					</title>
+					<author initials="T.B.L." surname="Berners-Lee"
+						fullname="T. Berners-Lee">
+						<organization>W3C/MIT</organization>
+					</author>
+					<author initials="R.F." surname="Fielding"
+						fullname="R. Fielding">
+						<organization>Day Software</organization>
+					</author>
+					<author initials="L.M." surname="Masinter"
+						fullname="L. Masinter">
+						<organization>Adobe Systems</organization>
+					</author>
+				</front>
+				<seriesInfo name="RFC" value="3986" />
+			</reference>
+			<reference anchor="OpenID.authentication-2.0">
+				<front>
+					<title>OpenID Authentication 2.0 - Final</title>
+
+					<author>
+						<organization abbrev="OIDF">
+							OpenID Foundation
+						</organization>
+						<address>
+							<postal>
+								<street>
+									5331SW Macadam, Suite 258-515
+								</street>
+								<city>Portland</city>
+								<region>OR</region>
+								<code>97239</code>
+								<country>USA</country>
+							</postal>
+							<email>specs@openid.net</email>
+						</address>
+					</author>
+
+					<date month="December" year="2007" />
+
+					<abstract>
+						<t>
+							OpenID Authentication provides a way to
+							prove that an end user controls an
+							Identifier. It does this without the Relying
+							Party needing access to end user credentials
+							such as a password or to other sensitive
+							information such as an email address.
+						</t>
+
+						<t>
+							OpenID is decentralized. No central
+							authority must approve or register Relying
+							Parties or OpenID Providers. An end user can
+							freely choose which OpenID Provider to use,
+							and can preserve their Identifier if they
+							switch OpenID Providers.
+						</t>
+
+						<t>
+							While nothing in the protocol requires
+							JavaScript or modern browsers, the
+							authentication scheme plays nicely with
+							"AJAX"-style setups. This means an end user
+							can prove their Identity to a Relying Party
+							without having to leave their current Web
+							page.
+						</t>
+
+						<t>
+							OpenID Authentication uses only standard
+							HTTP(S) requests and responses, so it does
+							not require any special capabilities of the
+							User-Agent or other client software. OpenID
+							is not tied to the use of cookies or any
+							other specific mechanism of Relying Party or
+							OpenID Provider session management.
+							Extensions to User-Agents can simplify the
+							end user interaction, though are not
+							required to utilize the protocol.
+						</t>
+
+						<t>
+							The exchange of profile information, or the
+							exchange of other information not covered in
+							this specification, can be addressed through
+							additional service types built on top of
+							this protocol to create a framework. OpenID
+							Authentication is designed to provide a base
+							service to enable portable, user-centric
+							digital identity in a free and decentralized
+							manner.
+						</t>
+					</abstract>
+				</front>
+				<format type="TXT"
+					target="http://openid.net/specs/openid-authentication-2_0.txt" />
+				<format type="HTML"
+					target="http://openid.net/specs/openid-authentication-2_0.html" />
+			</reference>
+			<reference anchor="RFC3275">
+				<front>
+					<title>
+						(Extensible Markup Language) XML-Signature
+						Syntax and Processing
+					</title>
+					<author initials="D.E." surname="Eastlake 3rd"
+						fullname="Donald E. Eastlake 3rd">
+						<organization>Motorola</organization>
+					</author>
+					<author initials="J.R." surname="Reagle Jr."
+						fullname="Joseph M. Reagle Jr.">
+						<organization>
+							Massachusetts Institute of Technology
+						</organization>
+					</author>
+					<author initials="D.S." surname="Solo"
+						fullname="David
+                                                                 Solo">
+						<organization>Citigroup</organization>
+					</author>
+				</front>
+				<seriesInfo name="RFC" value="3275" />
+			</reference>
+
+			<!-- <reference anchor="Yadis">
+				<front>
+					<title>Yadis Specification 1.0</title>
+					<author initials="J.M" surname="Miller"
+						fullname="Joaquin Miller">
+						<organization>NetMesh</organization>
+					</author>
+				</front>
+				<format type="PDF"
+					target="http://yadis.org/papers/yadis-v1.0.pdf" />
+				<format type="ODT"
+					target="http://yadis.org/papers/yadis-v1.0.odt" />
+			</reference>-->
+
+			<reference anchor="XRDS-Simple">
+				<front>
+					<title>XRDS-Simple 1.0</title>
+					<author initials="Eran" surname="Hammer-Lahav"
+						fullname="Eran Hammer-Lahav">
+						<organization>Hueniverse, LLC</organization>
+					</author>
+				</front>
+				<format type="HTML"
+					target="http://xrds-simple.net/core/1.0/" />
+			</reference>
+		</references>
+	</back>
+</rfc>
