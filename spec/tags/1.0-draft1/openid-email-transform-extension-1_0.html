@@ -1,0 +1,1380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>Draft: OpenID Email Address Transform Extension 1.0 - Draft 1</title>
+<meta http-equiv="Expires" content="Sat, 28 Jun 2008 02:43:39 +0000">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="OpenID Email Address Transform Extension 1.0 - Draft 1">
+<meta name="generator" content="xml2rfc v1.33 (http://xml.resource.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">Draft</td><td class="header">D. Fuelling</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">Sappenin Technologies</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">February 2007</td></tr>
+</table></td></tr></table>
+<h1><br />OpenID Email Address Transform Extension 1.0 - Draft 1</h1>
+
+<h3>Abstract</h3>
+
+<p>
+				OpenID Email Address Transformation is an extension to
+				the OpenID Authentication 2.0 protocol, and provides a
+				straightforward mechanism to transform an RFC2822 email
+				address into an OpenId-compatible Url. The transform
+				procedure outlined in this document is designed to be
+				flexible enough such that every DNS domain-owner can
+				specify a unique transformation format that Relying
+				Parties can easily discover and utilize in thier OpenId
+				transactions.
+			
+</p><a name="toc"></a><br /><hr />
+<h3>Table of Contents</h3>
+<p class="toc">
+<a href="#anchor1">1.</a>&nbsp;
+Requirements Notation<br />
+<a href="#terminology">2.</a>&nbsp;
+Terminology<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">2.1.</a>&nbsp;
+Existing Terminology<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor3">2.2.</a>&nbsp;
+New Terminology<br />
+<a href="#anchor4">3.</a>&nbsp;
+Protocol Overview <br />
+<a href="#anchor5">4.</a>&nbsp;
+Reccommend Usage in OpenId Authentication 2.0<br />
+<a href="#normalization">5.</a>&nbsp;
+Normalization<br />
+<a href="#discovery">6.</a>&nbsp;
+Discovery<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#discovered_info">6.1.</a>&nbsp;
+Discovered Information<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor6">6.2.</a>&nbsp;
+XRDS-Based Discovery<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#service_elements">6.2.1.</a>&nbsp;
+Service Elements<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#extracting_auth">6.2.2.</a>&nbsp;
+Extracting the OpenId URL or ETT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#default_discovery">6.3.</a>&nbsp;
+Default Discovery<br />
+<a href="#transformation">7.</a>&nbsp;
+Tranforming an Email Address using an ETT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ett_structure">7.1.</a>&nbsp;
+ETT Structure<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ett_validity">7.2.</a>&nbsp;
+ETT Validity<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#valid_ett">7.2.1.</a>&nbsp;
+Valid ETT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#invalid_ett">7.2.2.</a>&nbsp;
+Invalid ETT<br />
+<a href="#ett_transform_procedure">8.</a>&nbsp;
+ETT Tranform Procedure<br />
+<a href="#anchor9">9.</a>&nbsp;
+Security Considerations<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor10">9.1.</a>&nbsp;
+Man-in-the-Middle Attacks<br />
+<a href="#anchor11">10.</a>&nbsp;
+Acknowledgements<br />
+<a href="#anchor12">Appendix&nbsp;A.</a>&nbsp;
+Examples<br />
+<a href="#normalization_example">Appendix&nbsp;A.1.</a>&nbsp;
+Email Address Normalization<br />
+<a href="#ett_example">Appendix&nbsp;A.2.</a>&nbsp;
+ETT Examples<br />
+<a href="#XRDS_Sample">Appendix&nbsp;A.3.</a>&nbsp;
+XRDS Service Element Examples<br />
+<a href="#ett_sample_1">Appendix&nbsp;A.3.1.</a>&nbsp;
+ETT Service Element Example 1<br />
+<a href="#ett_sample_2">Appendix&nbsp;A.3.2.</a>&nbsp;
+ETT Service Element Example 2<br />
+<a href="#rfc.references1">11.</a>&nbsp;
+Normative References<br />
+<a href="#rfc.authors">&#167;</a>&nbsp;
+Author's Address<br />
+</p>
+<br clear="all" />
+
+<a name="anchor1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Requirements Notation</h3>
+
+<p>
+				The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+				"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",
+				"MAY", and "OPTIONAL" in this document are to be
+				interpreted as described in
+				<a class='info' href='#RFC2119'>[RFC2119]<span> (</span><span class='info'>Bradner, B., &ldquo;Key words for use in RFCs to Indicate 						Requirement Levels,&rdquo; .</span><span>)</span></a>
+				.
+			
+</p>
+<a name="terminology"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Terminology</h3>
+
+<p>
+				The terminology definitions are broken up into three
+				sub-categories: Existing, New, and Extended terminology.
+			
+</p>
+<a name="anchor2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+Existing Terminology</h3>
+
+<p>
+					The following terminology is specified in
+					<a class='info' href='#OpenID.authentication-2.0'>OpenId Authentication 2.0<span> (</span><span class='info'>Recordon, D., Hoyt, J., Fitzpatrick, B., and D. Hardt, &ldquo;OpenID Authentication 2.0 - Draft 11,&rdquo; August&nbsp;2006.</span><span>)</span></a> [OpenID.authentication&#8209;2.0]
+					, and is reproduced here for reference throughout
+					this document.
+				
+</p>
+<p>
+					</p>
+<blockquote class="text"><dl>
+<dt>Relying Party:</dt>
+<dd>
+							RP. A Web application that wants proof that
+							the end user controls an Identifier.
+						
+</dd>
+<dt>OpenID Provider:</dt>
+<dd>
+							OP. An OpenID Authentication server on which
+							a Relying Party relies for an assertion that
+							the end user controls an Identifier.
+						
+</dd>
+<dt>OP Endpoint URL:</dt>
+<dd>
+							The URL which accepts OpenID Authentication
+							requests, obtained by performing discovery
+							on the the User-Supplied Identifier. This
+							value MUST be an absolute URL.
+						
+</dd>
+<dt>Claimed Identifier:</dt>
+<dd>
+							An Identifier that the end user claims to
+							own; the overall aim of the protocol is
+							verifying this claim. The Claimed Identifier
+							is either:
+							
+<ul class="text">
+<li>
+									The Identifier obtained by
+									<a href='http://openid.net/specs/openid-authentication-2_0-11.html#normalization'>normalizing</a>
+									the User-Supplied Identifier, if it
+									was an URL.
+								
+</li>
+<li>
+									The
+									<a href='http://openid.net/specs/openid-authentication-2_0-11.html#canonicalid'>CanonicalID</a>
+									, if it was an XRI.
+								
+</li>
+</ul>
+						
+</dd>
+</dl></blockquote><p>
+				
+</p>
+<a name="anchor3"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+New Terminology</h3>
+
+<p>
+					The following is new terminology for this
+					<a class='info' href='#OpenID.authentication-2.0'>OpenId Authentication 2.0<span> (</span><span class='info'>Recordon, D., Hoyt, J., Fitzpatrick, B., and D. Hardt, &ldquo;OpenID Authentication 2.0 - Draft 11,&rdquo; August&nbsp;2006.</span><span>)</span></a> [OpenID.authentication&#8209;2.0]
+					extension.
+				
+</p>
+<p>
+					</p>
+<blockquote class="text"><dl>
+<dt>Processing-Agent</dt>
+<dd>
+							A Relying Party or other agent (e.g, a
+							computer program) attempting to perform an
+							OpenId Email Address Transform operation.
+						
+</dd>
+<dt>OpenId URL</dt>
+<dd>
+							An "http" or "https" schemed
+							<a class='info' href='#RFC3986'>URI<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic 						Syntax,&rdquo; .</span><span>)</span></a> [RFC3986]
+							(commonly referred to as a "URL" within this
+							document) which can be used in the OpenId
+							protocol.
+						
+</dd>
+<dt>Email Address:</dt>
+<dd>
+							An
+							<a class='info' href='#RFC2822'>RFC2822<span> (</span><span class='info'>Resnick, P., &ldquo;Internet Message Format,&rdquo; .</span><span>)</span></a> [RFC2822]
+							compatible Email address.
+						
+</dd>
+<dt>Email Identifier:</dt>
+<dd>
+							An Email Address that was presented to the
+							Processing Agent. The Email Identifier can
+							be normalized and tranformed into an OpenId
+							Url.
+						
+</dd>
+<dt>Normalized Email Identifier:</dt>
+<dd>
+							An RFC2822 'Addr-spec' compatible email
+							address that can be used in the OpenID Email
+							Address Tranformation Extension. This
+							Identifier is typically the result of
+							<a class='info' href='#normalization'>normalizing<span> (</span><span class='info'>Normalization</span><span>)</span></a>
+							an Email Identifier.
+						
+</dd>
+<dt>Email Address Transform Template (ETT)</dt>
+<dd>
+							A URI, possibly containing a Wildcard
+							Replacement Token.
+						
+</dd>
+<dt>Wildcard Replacement Token</dt>
+<dd>
+							A string surrounded by an opening-brace and
+							a closing-brace, in that order (such as
+							[username]). The Wildcard Replacement Token
+							is used inside of an ETT to designate how an
+							OP structures its Claimed Identifiers.
+						
+</dd>
+</dl></blockquote><p>
+				
+</p>
+<a name="anchor4"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;
+Protocol Overview </h3>
+
+<p>
+				</p>
+<ol class="text">
+<li>
+						An Email Address is presented to the
+						Processing-Agent.
+					
+</li>
+<li>
+						The Email Address is
+						<a class='info' href='#normalization'>normalized<span> (</span><span class='info'>Normalization</span><span>)</span></a>
+						to produce a Normalized Email Identifier.
+
+					
+</li>
+<li>
+						The Processing-Agent then performs
+						<a class='info' href='#discovery'>discovery<span> (</span><span class='info'>Discovery</span><span>)</span></a>
+						on the Normalized Email Identifier and retrieves
+						either an OpenId URL or an Email Address
+						Transform Template URL (ETT).
+					
+</li>
+<li>
+						(Optional) If an ETT is found, it is tranformed
+						into an OpenId URL using information extracted
+						from the Normalized Email Identifier.
+					
+</li>
+<li>
+						The resulting OpenId URL can then be used in an
+						OpenId Authentication transaction.
+					
+</li>
+</ol><p>
+			
+</p>
+<a name="anchor5"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Reccommend Usage in OpenId Authentication 2.0</h3>
+
+<p>
+				This protocol extension results in an OpenId Url that
+				can be utilized by a Relying Party to initiate OpenId
+				Authentication.
+
+				<br />
+<br />
+
+				Traditionally, OpenId Authentication 2.0 allows a
+				User-Supplied Identifier to be an Identifier that is
+				presented by the end user to the Relying Party, or
+				selected by the user at the OpenID Provider. During the
+				initiation phase of the protocol, an end user may enter
+				either their own Identifier or an OP Identifier. If an
+				OP Identifier is used, the OP may then assist the end
+				user in selecting an Identifier to share with the
+				Relying Party.
+				<br />
+<br />
+
+
+				Using this extension, OpenId Relying parties can extend
+				the definition of a User-Supplied Identifier to be the
+				following:
+				<br />
+<br />
+
+				A User-Supplied Identifier is an Identifier or Email Identifier that was presented by
+				the end user to the Relying Party, or an Identifier
+				selected by the user at the OpenID Provider. During the
+				initiation phase of the protocol, an end user may enter
+				either their own Identifier, an OP Identifier, or an
+				Email Identifier. If an OP Identifier is used, the OP
+				may then assist the end user in selecting an Identifier
+				to share with the Relying Party. If an Email Identifier
+				is used, this identifier will be tranformed into its
+				corresponding OpenId URL, and used as a traditional User-Supplied
+				Identifier in OpenId 2.0 Authentication.
+
+			
+</p>
+<a name="normalization"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;
+Normalization</h3>
+
+<p>
+				The Email Identifier provided to the Processing Agent
+				MUST be normalized into a Normalized Email Identifier,
+				as follows:
+			
+</p>
+<p>
+				</p>
+<ol class="text">
+<li>
+						If the Email Identifier contains one or more
+						 comma's (ASCII #2C or
+						','), then all comma's in the Email Identifier
+						SHALL be converted into semi-colon's (ASCII #3B or ';')
+						using the ASCII character set.
+						<br />
+<br />
+
+					
+</li>
+<li>
+						The resulting Email
+						Identifier must be broken up into tokens using a
+						semi-colon delmiter.  The first token ONLY becomes
+						the new Email Identifier for purposes of Normalization.
+						<br />
+<br />
+
+					
+</li>
+<li>
+						If the resulting Email Identifier contains more
+						than 1 'less-than' (ASCII #3C or '&lt;')
+						character and/or more than one 'greater-than'
+						(ASCII #3E or '&gt;') character, then the Email
+						Identifier is considered to be invalid, and the
+						tranformation process SHOULD fail.
+						<br />
+<br />
+
+
+					
+</li>
+<li>
+						If the resulting Email Identifier contains a
+						single 'less-than' character, it SHOULD also
+						contain a 'greater-than' character at some point
+						after the 'less-than' character. If only one,
+						but not both, of these character are present in
+						the Email Identifier, then the Email Identifier
+						is considered to be invalid, and the
+						tranformation process SHOULD fail.
+						<br />
+<br />
+
+					
+</li>
+<li>
+						If a single 'less-than' character and a single
+						'greater-than' character are both present in the
+						Email Identifier, all text up to and including
+						the 'less-than' character MUST be removed and
+						discarded. In addition, all text from the
+						'greater-than' character inclusive, to the end of the Email
+						Identifier MUST be removed and discarded. For
+						example, the Email Identifier 'Beth "I'm cool"
+						Jones" &lt;beth@example.com&gt;' MUST become
+						'beth@example.com' (single quotes are for clarity,
+						and not part of the actual protocol).
+						<br />
+<br />
+
+					
+</li>
+<li>
+						Email Identifiers MUST then be further
+						normalized to conform to section 3.4.1
+						(Addr-spec specification) of RFC2822. After
+						completing this Normalization process, the Email
+						Identifier MUST be a valid Addr-spec as defined
+						by RFC2822, and SHOULD be of the following form:
+						addr-spec = local-part "@" domain
+						<br />
+<br />
+
+					
+</li>
+<li>
+						After all normalization steps have been
+						complete, the resulting ASCII string is known as
+						the Normalized Email Identifier.
+					
+</li>
+</ol><p>
+
+				See these
+				<a class='info' href='#normalization_example'>normalization examples<span> (</span><span class='info'>Email Address Normalization</span><span>)</span></a>
+				for further valid and invalid examples of an Email
+				Identifier that has been fully normalized.
+			
+</p>
+<a name="discovery"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;
+Discovery</h3>
+
+<p>
+				Discovery is the process where the Processing Agent uses
+				the Normalized Email Identifier to look up ("discover")
+				the necessary information for transforming the
+				Normalized Email Identifier into an OpenId URL. This 
+				extension protocol has two paths
+				through which to do discovery:
+			
+</p>
+<p>
+				</p>
+<ol class="text">
+<li>
+						The
+						<a class='info' href='#Yadis'>Yadis protocol<span> (</span><span class='info'>Miller, J., &ldquo;Yadis Specification 1.0,&rdquo; .</span><span>)</span></a> [Yadis]
+						SHALL be first attempted. If it succeeds, the
+						result is an XRDS document that contains the
+						necessary information for the protocol to
+						continue. If more than one applicable Service
+						Element is returned in the XRDS document, the
+						precedence rules defined in
+						<a class='info' href='#XRI_Resolution_2.0'>[XRI_Resolution_2.0]<span> (</span><span class='info'>Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;Extensible Resource Identifier (XRI) Resolution 						V2.0 - Working Draft 10,&rdquo; .</span><span>)</span></a>
+						are to be applied.
+					
+</li>
+<li>
+						If the Yadis protocol fails for any reason
+						(e.g., no valid XRDS document is retrieved, or
+						no valid
+						<a class='info' href='#service_elements'>Service Elements<span> (</span><span class='info'>Service Elements</span><span>)</span></a>
+						are found in the XRDS document), then <a class='info' href='#default_discovery'>Default Discovery<span> (</span><span class='info'>Default Discovery</span><span>)</span></a> MUST be peformed.
+					
+</li>
+</ol><p>
+			
+</p>
+<a name="discovered_info"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.1"></a><h3>6.1.&nbsp;
+Discovered Information</h3>
+
+<p>
+					Upon successful completion of discovery, the
+					Processing Agent will have the Email Address
+					Transform Protocol version, as well as one or both
+					of the following pieces of information:
+
+					</p>
+<ul class="text">
+<li>OpenId URL
+</li>
+<li>Email Address Transform Template (ETT)
+</li>
+</ul><p>
+
+					The OpenId URL can be used in existing OpenId
+					Authentication protocols, meaning it could either be
+					an OP EndPoint URL or a Claimed Identifier. If an
+					ETT is discovered instead of an OpenId URL, the ETT
+					SHOULD be used to transform the Normalized Email
+					Identifier into an OpenId URL.
+				
+</p>
+<a name="anchor6"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.2"></a><h3>6.2.&nbsp;
+XRDS-Based Discovery</h3>
+
+<p>
+					If Yadis discovery was used, the result will be an
+					XRDS Document, which is defined in
+					<a class='info' href='#XRI_Resolution_2.0'>Section 3 of<span> (</span><span class='info'>Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;Extensible Resource Identifier (XRI) Resolution 						V2.0 - Working Draft 10,&rdquo; .</span><span>)</span></a> [XRI_Resolution_2.0]. This is an XML document with entries
+					for services that are related to the Normalized
+					Email Identifier.
+				
+</p>
+<a name="service_elements"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.2.1"></a><h3>6.2.1.&nbsp;
+Service Elements</h3>
+
+<p>
+					For non-normative examples of XRDS Service Elements
+					supported by this protocol, see the
+					<a class='info' href='#XRDS_Sample'>XRDS Examples<span> (</span><span class='info'>XRDS Service Element Examples</span><span>)</span></a>
+					section.
+				
+</p>
+<a name="anchor7"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.2.1.1"></a><h3>6.2.1.1.&nbsp;
+Email Address Transform Template Element</h3>
+
+<p>
+						An Email Address Transform Template (ETT)
+						Element is an &lt;xrd:Service&gt; element with
+						the following information:
+
+						</p>
+<ul class="text">
+<li>
+								An &lt;xrd:Type&gt; tag whose text
+								content is
+								"http://openid.net/srv/oeat/1.0/ett".
+							
+</li>
+<li>
+								An &lt;xrd:URI&gt; tag whose text
+								content is an an Email Address Transform
+								URL (ETT).
+							
+</li>
+</ul><p>
+					
+</p>
+<a name="anchor8"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.2.1.2"></a><h3>6.2.1.2.&nbsp;
+OpenId URL Element</h3>
+
+<p>
+						An OpenId URL Element is an &lt;xrd:Service&gt;
+						element with the following information:
+
+						</p>
+<ul class="text">
+<li>
+								An &lt;xrd:Type&gt; tag whose text
+								content is
+								"http://specs.openid.net/auth/2.0/server".
+							
+</li>
+<li>
+								An &lt;xrd:URI&gt; tag whose text
+								content is an OP Endpoint URL (An
+								OP Endpoint URL as defined in OpenId
+								Authentication 2.0 is an OpenId URL
+								Identifier as defined by this
+								extension).
+							
+</li>
+</ul><p>
+					
+</p>
+<a name="extracting_auth"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.2.2"></a><h3>6.2.2.&nbsp;
+Extracting the OpenId URL or ETT</h3>
+
+<p>
+					Once the Processing Agent has obtained an XRDS
+					document, it MUST first search the document
+					(following the rules described in
+					<a class='info' href='#XRI_Resolution_2.0'>[XRI_Resolution_2.0]<span> (</span><span class='info'>Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;Extensible Resource Identifier (XRI) Resolution 						V2.0 - Working Draft 10,&rdquo; .</span><span>)</span></a>
+					) for either a valid OpenId URL or an Email Address
+					Transform Template. If none of these are found, then
+					<a class='info' href='#default_discovery'>Default Discovery<span> (</span><span class='info'>Default Discovery</span><span>)</span></a>
+					SHALL be performed.
+				
+</p>
+<a name="default_discovery"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6.3"></a><h3>6.3.&nbsp;
+Default Discovery</h3>
+
+<p>
+					If the Yadis protocol fails (e.g., no valid XRDS
+					document was retrieved, or no valid Service Elements
+					were found in the XRDS document), then the OpenId URL
+					returned by this protocol SHALL be an OP Identifier
+					that is assembled as follows:
+				
+</p>
+<p>
+					</p>
+<ol class="text">
+<li>
+							Parse the Normalized Email Address using the
+							'at sign' ('@' ASCII #40) as a delimeter.
+							The result of this parsing operation SHOULD
+							be two tokens, the second of which will be
+							the 'domain' of the Email Address as defined
+							by RFC2822, section 3.4.1. (The first token
+							will be the 'local-part' as defined by
+							RFC2822). The first token SHALL be
+							discarded, leaving the second token, which
+							is the 'domain'.
+							<br />
+<br />
+
+						
+</li>
+<li>
+							Using the 'domain' result from the first
+							step, prepend the string "https://" to it.
+							<br />
+<br />
+
+						
+</li>
+<li>
+							The resulting URI is a valid OP Identifier
+							and is the final result of this protocol
+							extension if, and only if, OpenId discovery
+							(as defined by the OpenId Authentication 2.0
+							specification) is successful on the
+							resulting URI.
+							<br />
+<br />
+
+						
+</li>
+<li>
+							If OpenId discovery is not successufl on the
+							resulting URI (i.e., no XRDS document is
+							found, or no valid Service Elements are
+							found in the XRDS document), then a new URI
+							should be assembled by starting with the
+							'domain' result from the first step, and
+							prepending the string "https://www." to it.
+							<br />
+<br />
+
+						
+</li>
+<li>
+							The resulting URI is a valid OP Identifier
+							and is the final result of this protocol
+							extension. If OpenId Discovery (as defined
+							by the OpenId Authentication 2.0
+							specification) is unsuccessful on the final
+							resulting URI, then Email Transformation is
+							not possible with the supplied Email
+							Address.  The Processing Agent SHOULD treat 
+							the supplied Email Address as it would any other
+							invalid User-Supplied Identifier. 
+						
+</li>
+</ol><p>
+				
+</p>
+<a name="transformation"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7"></a><h3>7.&nbsp;
+Tranforming an Email Address using an ETT</h3>
+
+<p>
+				In order to tranform a Normalized Email Address into an
+				OpenId URL, a Processing Agent must have a valid Email
+				Address Tranform Template (ETT). This section details
+				the structure of the ETT, as well as the steps necessary
+				to tranform an Email Address into an OpenId Url using an
+				ETT.
+			
+</p>
+<a name="ett_structure"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7.1"></a><h3>7.1.&nbsp;
+ETT Structure</h3>
+
+<p>
+					An Email Address Transform Template (ETT) is an
+					absolute URI that contains zero or more Wildcard
+					Replacement Fields, each of which are textual character(s)
+					surrounded by an
+					opening-bracket ('[' ASCII #5B ) on the left, and a
+					closing-bracket (']' ASCII #5D) on the right.
+					<br />
+<br />
+
+					As of this version of the Transform protocol, the
+					only allowed replacement field is 'username'.
+					<br />
+<br />
+
+					Because the 'opening-bracket' and 'closing-bracket'
+					characters are prohibited by the URI syntax, these
+					characters MUST be percent-encoded per section 2.1 of the  
+					URI Specification before being included in an XRDS document.
+				
+</p>
+<a name="ett_validity"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7.2"></a><h3>7.2.&nbsp;
+ETT Validity</h3>
+
+<a name="valid_ett"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7.2.1"></a><h3>7.2.1.&nbsp;
+Valid ETT</h3>
+
+<p>
+						An Email Address Transform Template (ETT) is
+						considered to be valid if it is either a valid
+						URI, or a URI with a Wildcard Replacement Field
+						as allowed by this protocol.  Currently, only the
+						[username] Wildcard Replacement Field is
+						defined and allowed.
+					
+</p>
+<a name="invalid_ett"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.7.2.2"></a><h3>7.2.2.&nbsp;
+Invalid ETT</h3>
+
+<p>
+						An Email Address Transform Template (ETT) is
+						considered to be invalid if the ETT has any of
+						the following properties:
+						</p>
+<ul class="text">
+<li>
+								It contains more than one of either kind
+								of bracket.
+							
+</li>
+<li>
+								It contains an odd number of brackets.
+							
+</li>
+</ul><p>
+
+						An invalid ETT MUST NOT be used in an Email
+						Address Transform operation.
+					
+</p>
+<a name="ett_transform_procedure"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.8"></a><h3>8.&nbsp;
+ETT Tranform Procedure</h3>
+
+<p>
+				In order to tranform a Normalized Email Address into an
+				OpenId URL, a Processing Agent must have a valid Email
+				Address Tranform Template (ETT). If the valid ETT does
+				not contain any Wildcard Replacement Fields, then the
+				transform is complete: The ETT is the OpenId URL, and
+				this transform extension protocol ends.
+				<br />
+<br />
+
+				However, if the ETT does contain a Wildcard Replacement
+				Field, then the following procedure is used to tranform
+				the Normalized Email Address into an OpenId Url using an
+				ETT:
+			
+</p>
+<p>
+				</p>
+<ol class="text">
+<li>
+						Tokenize the Normalized Email Address using the
+						'at sign' ('@' ASCII #40) as a delimeter. The
+						result of this parsing operation SHOULD be two
+						tokens, the first of which will be the
+						'local-part' of the Email Address as defined by
+						RFC2822, section 3.4.1. (The second token will
+						be the 'domain).
+						<br />
+<br />
+
+					
+</li>
+<li>
+						The ETT should be percent-decoded per section 2.1 of 
+						the URI specification.  Specifically, %5B should be decoded
+						to be the opening-bracket, while %5D should be decoded to 
+						be the closing bracket, but only where these two characters 
+						surround a valid Wildcard Replacement String (such as 'username').
+						<br />
+<br />
+
+					
+</li>
+<li>
+						Next, in the ETT replace the portion of the ETT that
+						contains '[username]' with the value of the
+						'local-part' portion of the email address.
+						<br />
+<br />
+
+					
+</li>
+<li>
+						The resulting URI is a valid OpenId URL (Note
+						that this URL will likely be treated as a
+						Claimed Identifier, although this is ultimately
+						OP-implementation defined).
+						<br />
+<br />
+
+					
+</li>
+</ol><p>
+			
+</p>
+<a name="anchor9"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.9"></a><h3>9.&nbsp;
+Security Considerations</h3>
+
+<a name="anchor10"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.9.1"></a><h3>9.1.&nbsp;
+Man-in-the-Middle Attacks</h3>
+
+<p>
+					If DNS resolution or the transport layer is
+					compromised, this protocol is not fully secure since
+					the attacker can impersonate the OP and tamper with
+					the discovery process. If an attacker can tamper
+					with the discovery process he/she can specify any
+					OP, and so does not have to impersonate the OP.
+					Additionally, if an attacker can compromise the
+					integrity of the information returned during the
+					discovery process, by altering the XRDS document,
+					the need for a man in the middle is removed. In such
+					an attack, a forged OpenId Endpoint URL or forged
+					ETT could be returned. One method to prevent this
+					sort of attack is by digitally signing the XRDS file
+					as per
+					<a class='info' href='#RFC3275'>XMLDSIG<span> (</span><span class='info'>Eastlake 3rd, D., Reagle Jr., J., and D. Solo, &ldquo;(Extensible Markup Language) XML-Signature 						Syntax and Processing,&rdquo; .</span><span>)</span></a> [RFC3275]
+					. The keying material is not specified, since the RP
+					ultimately needs to make its own decision whether to
+					trust keys used for such a signature.
+				
+</p>
+<p>
+					Using SSL with certificates signed by a trusted
+					authority prevents these kinds of attacks by
+					verifying the results of the DNS look-up against the
+					certificate. Once the validity of the certificate
+					has been established, tampering is not possible.
+					Impersonating an SSL server requires forging or
+					stealing a certificate, which is significantly
+					harder than the network based attacks.
+				
+</p>
+<p>
+					In order to get protection from SSL, SSL must be
+					used for all parts of this protocol, While the
+					protocol does not require SSL be used, its use is
+					strongly RECOMMENDED. Current best practices dictate
+					that an OP SHOULD use SSL, with a certificate signed
+					by a trusted authority, to secure its Endpoint URL
+					as well as the interactions with the Processing
+					Agent. In addition, SSL, with a certificate signed
+					by a trusted authority, SHOULD be used so that a
+					Relying Party can fetch the end user's URL in a
+					secure manner. Following its own security policies,
+					a Processing-Agent MAY choose to not complete, or
+					even begin, a transaction if SSL is not being
+					correctly used at these various endpoints.
+				
+</p>
+<a name="anchor11"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.10"></a><h3>10.&nbsp;
+Acknowledgements</h3>
+
+<p>
+				Textual portions of the OpenID Authentication 2.0 and
+				XML portions of the OpenId Attribute Exchange 1.0
+				specifications were used in the creation of this
+				extension document.
+			
+</p>
+<a name="anchor12"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A"></a><h3>Appendix A.&nbsp;
+Examples</h3>
+
+<p>Non-normative
+</p>
+<a name="normalization_example"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A.1"></a><h3>Appendix A.1.&nbsp;
+Email Address Normalization</h3>
+<br /><hr class="insert" />
+<table class="full" align="center" border="0" cellpadding="2" cellspacing="2">
+<col align="left"><col align="left"><col align="center">
+<tr><th align="left">&nbsp;
+						&nbsp;
+						Supplied Email Address
+						&nbsp;
+						&nbsp;</th><th align="left">&nbsp;
+						&nbsp;
+						Normalized Email Address
+						&nbsp;
+						&nbsp;</th><th align="center">&nbsp;
+						Valid
+						&nbsp;</th></tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						Beth jones &lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						&lt;beth@example.com&gt; Beth jones
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						Bethany "Beth" Jones &lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com;bob@example.com,mallory@example.com
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						beth@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						mallory@example.com,beth@example.com,bob@example.com
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						mallory@example.com
+					</td>
+<td align="center">
+						&nbsp;
+						valid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						&lt;Beth jones &lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						Beth jones&gt; &lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						Beth jones &lt;&lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						&lt;Beth jones&gt; &lt;beth@example.com&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						&lt;Beth Jones&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+<tr>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						&lt;beth@example.com&gt; &lt;Beth jones&gt;
+					</td>
+<td align="left">
+						&nbsp;
+						&nbsp;
+						n/a
+					</td>
+<td align="center">
+						&nbsp;
+						invalid
+					</td>
+</tr>
+</table>
+<br clear="all" />
+<table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Email Address Supplied to the Processing Agent&nbsp;</b></font><br /></td></tr></table><hr class="insert" />
+
+<a name="ett_example"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A.2"></a><h3>Appendix A.2.&nbsp;
+ETT Examples</h3>
+<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>https://[username].example.com/</pre></div><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>https://www.example.com/server/[username]</pre></div>
+<a name="XRDS_Sample"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A.3"></a><h3>Appendix A.3.&nbsp;
+XRDS Service Element Examples</h3>
+
+<a name="ett_sample_1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A.3.1"></a><h3>Appendix A.3.1.&nbsp;
+ETT Service Element Example 1</h3>
+
+<p>
+							For a Normalized Email Address
+							'beth@example.com' to tranform to the OpenId
+							URL 'https://beth.example.com', the
+							following XML snippet should be present in
+							the the XRDS file when discovery is
+							preformed on "https://example.com/" or
+							"https://www.example.com":
+						
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+
+&lt;Service xmlns="xri://$xrd*($v*2.0)"&gt;
+  &lt;Type&gt;http://openid.net/srv/oeat/1.0/ett&lt;/Type&gt;
+  &lt;URI&gt;https://%5Busername%5D.example.com/&lt;/URI&gt;
+&lt;/Service&gt;
+
+</pre></div>
+<a name="ett_sample_2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.A.3.2"></a><h3>Appendix A.3.2.&nbsp;
+ETT Service Element Example 2</h3>
+
+<p>
+							For a Normalized Email Address
+							'beth@example.com' to tranform to the OpenId
+							URL
+							'https://www.example.com/openid/personas/beth',
+							the following XML snippet should be present
+							in the the XRDS file when discovery is
+							preformed on "https://example.com/" or
+							"https://www.example.com":
+						
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+
+&lt;Service xmlns="xri://$xrd*($v*2.0)"&gt;
+  &lt;Type&gt;http://openid.net/srv/oeat/1.0/ett&lt;/Type&gt;
+  &lt;URI&gt;https://www.example.com/openid/personas/%5Busername%5D/&lt;/URI&gt;
+&lt;/Service&gt;
+
+</pre></div>
+<a name="rfc.references1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>11.&nbsp;Normative References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="ASCII">[ASCII]</a></td>
+<td class="author-text">The Unicode Consortium, &ldquo;<a href="http://www.unicode.org/charts/PDF/U0000.pdf">The ASCII subset of the Unicode Standard 5.0</a>.&rdquo;</td></tr>
+<tr><td class="author-text" valign="top"><a name="OpenID.authentication-2.0">[OpenID.authentication-2.0]</a></td>
+<td class="author-text"><a href="mailto:drecordon@verisign.com">Recordon, D.</a>, <a href="mailto:josh@janrain.com">Hoyt, J.</a>, <a href="mailto:brad@danga.com">Fitzpatrick, B.</a>, and <a href="mailto:dick@sxip.com">D. Hardt</a>, &ldquo;OpenID Authentication 2.0 - Draft 11,&rdquo; August&nbsp;2006 (<a href="http://www.openid.net/specs/openid-authentication-2_0-11.txt">TXT</a>, <a href="http://www.openid.net/specs/openid-authentication-2_0-11.html">HTML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text">Bradner, B., &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate
+						Requirement Levels</a>,&rdquo; RFC&nbsp;2119.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC2616">[RFC2616]</a></td>
+<td class="author-text">Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>,&rdquo; RFC&nbsp;2616.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC2822">[RFC2822]</a></td>
+<td class="author-text">Resnick, P., &ldquo;<a href="http://tools.ietf.org/html/rfc2822">Internet Message Format</a>,&rdquo; RFC&nbsp;2822.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC3275">[RFC3275]</a></td>
+<td class="author-text">Eastlake 3rd, D., Reagle Jr., J., and D. Solo, &ldquo;<a href="http://tools.ietf.org/html/rfc3275">(Extensible Markup Language) XML-Signature
+						Syntax and Processing</a>,&rdquo; RFC&nbsp;3275.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC3986">[RFC3986]</a></td>
+<td class="author-text">Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic
+						Syntax</a>,&rdquo; RFC&nbsp;3986.</td></tr>
+<tr><td class="author-text" valign="top"><a name="XRI_Resolution_2.0">[XRI_Resolution_2.0]</a></td>
+<td class="author-text">Wachob, G., Reed, D., Chasen, L., Tan, W., and S. Churchill, &ldquo;<a href="http://www.oasis-open.org/committees/download.php/17293">Extensible Resource Identifier (XRI) Resolution
+						V2.0 - Working Draft 10</a>&rdquo; (<a href="http://www.oasis-open.org/committees/download.php/17293">PDF</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="XRI_Syntax_2.0">[XRI_Syntax_2.0]</a></td>
+<td class="author-text">Reed, D. and D. McAlpin, &ldquo;<a href="http://www.oasis-open.org/committees/download.php/15376">Extensible Resource Identifier (XRI) Syntax V2.0</a>&rdquo; (<a href="http://www.oasis-open.org/committees/download.php/15376">HTML</a>, <a href="http://www.oasis-open.org/committees/download.php/15377">PDF</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="Yadis">[Yadis]</a></td>
+<td class="author-text">Miller, J., &ldquo;Yadis Specification 1.0&rdquo; (<a href="http://yadis.org/papers/yadis-v1.0.pdf">PDF</a>, <a href="http://yadis.org/papers/yadis-v1.0.odt">ODT</a>).</td></tr>
+</table>
+
+<a name="rfc.authors"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Author's Address</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">David Fuelling</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Sappenin Technologies, LLC</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Salt Lake City, UT  84117</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">USA</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:sappenin@gmail.com">sappenin@gmail.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.sappenin.com">http://www.sappenin.com</a></td></tr>
+</table>
+</body></html>
+
