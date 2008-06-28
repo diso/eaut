@@ -1,0 +1,1345 @@
+
+
+
+Draft                                                        D. Fuelling
+                                                   Sappenin Technologies
+                                                           June 28, 2008
+
+
+         OpenID Email Address Transform Extension 1.0 - Draft 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 1]
+
+                                  OEAT                         June 2008
+
+
+Abstract
+
+   OpenID Email Address Transformation (OEAT) is an extension to the
+   OpenID Authentication 2.0 protocol, and provides a straightforward
+   mechanism to transform an RFC2822 email address into an OpenID-
+   compatible URL or XRI.  The transform options outlined in this
+   document are designed to be flexible enough such that every DNS
+   domain-owner can specify unlimited email address to OpenID
+   transformations that Relying Parties can easily discover and utilize
+   in their OpenID transactions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 2]
+
+                                  OEAT                         June 2008
+
+
+Table of Contents
+
+   1.  Requirements Notation  . . . . . . . . . . . . . . . . . . . .  4
+   2.  Terminology  . . . . . . . . . . . . . . . . . . . . . . . . .  5
+     2.1.  Existing Terminology . . . . . . . . . . . . . . . . . . .  5
+     2.2.  New Terminology  . . . . . . . . . . . . . . . . . . . . .  5
+   3.  Protocol Overview  . . . . . . . . . . . . . . . . . . . . . .  7
+   4.  Reccommend Usage in OpenID Authentication 2.0  . . . . . . . .  8
+   5.  Normalization  . . . . . . . . . . . . . . . . . . . . . . . .  9
+   6.  OEAT Discovery . . . . . . . . . . . . . . . . . . . . . . . . 11
+     6.1.  Determining the OEAT Discovery Endpoint URL  . . . . . . . 11
+     6.2.  Discovered Information . . . . . . . . . . . . . . . . . . 12
+     6.3.  XRDS-Based Discovery . . . . . . . . . . . . . . . . . . . 12
+       6.3.1.  Valid Service Type Elements  . . . . . . . . . . . . . 12
+       6.3.2.  Extracting the OpenID URL, ETT, or EATOID Endpoint
+               URL  . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.  Tranforming an Email Address using an ETT  . . . . . . . . . . 14
+     7.1.  ETT Structure  . . . . . . . . . . . . . . . . . . . . . . 14
+     7.2.  ETT Validity . . . . . . . . . . . . . . . . . . . . . . . 14
+       7.2.1.  Valid ETT  . . . . . . . . . . . . . . . . . . . . . . 14
+       7.2.2.  Invalid ETT  . . . . . . . . . . . . . . . . . . . . . 14
+     7.3.  ETT Tranform Procedure . . . . . . . . . . . . . . . . . . 14
+   8.  Tranforming an Email Address using an EATOID Service . . . . . 16
+     8.1.  EATOID Service Query . . . . . . . . . . . . . . . . . . . 16
+     8.2.  EATOID Service Result  . . . . . . . . . . . . . . . . . . 16
+   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 17
+     9.1.  Man-in-the-Middle Attacks  . . . . . . . . . . . . . . . . 17
+     9.2.  EATOID Email-Address Harvesting Attack . . . . . . . . . . 17
+     9.3.  OP Email-Address Harvesting Attack . . . . . . . . . . . . 18
+   10. Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 19
+   Appendix A.     Examples . . . . . . . . . . . . . . . . . . . . . 20
+   Appendix A.1.   Email Address Normalization  . . . . . . . . . . . 20
+   Appendix A.2.   ETT Examples . . . . . . . . . . . . . . . . . . . 21
+   Appendix A.3.   XRDS Service Element Examples  . . . . . . . . . . 21
+   Appendix A.3.1. ETT Service Element Example 1  . . . . . . . . . . 21
+   Appendix A.3.2. ETT Service Element Example 2  . . . . . . . . . . 21
+   Appendix A.4.   EATOID HTTP Query Example  . . . . . . . . . . . . 22
+   Appendix A.5.   EATOID HTTP Result Example . . . . . . . . . . . . 22
+   11. Normative References . . . . . . . . . . . . . . . . . . . . . 23
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 3]
+
+                                  OEAT                         June 2008
+
+
+1.  Requirements Notation
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119] .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 4]
+
+                                  OEAT                         June 2008
+
+
+2.  Terminology
+
+   The terminology definitions are broken up into two sub-categories:
+   Existing and New terminology.
+
+2.1.  Existing Terminology
+
+   The following terminology is specified in OpenID Authentication 2.0
+   [OpenID.authentication-2.0] , and is reproduced here for reference
+   throughout this document.
+
+   Relying Party:  RP.  A Web application that wants proof that the end
+      user controls an Identifier.
+
+   OpenID Provider:  OP.  An OpenID Authentication server on which a
+      Relying Party relies for an assertion that the end user controls
+      an Identifier.
+
+   OP Endpoint URL:  The URL which accepts OpenID Authentication
+      requests, obtained by performing discovery on the the User-
+      Supplied Identifier.  This value MUST be an absolute URL.
+
+   Claimed Identifier:  An Identifier that the end user claims to own;
+      the overall aim of the OpenID Authentication 2.0 protocol is
+      verifying this claim.  The Claimed Identifier is either:
+
+      *  The Identifier obtained by normalizing the User-Supplied
+         Identifier, if it was an URL.
+
+      *  The CanonicalID , if it was an XRI.
+
+2.2.  New Terminology
+
+   The following is new terminology for this OpenID Authentication 2.0
+   [OpenID.authentication-2.0] extension.
+
+   Processing-Agent  A Relying Party or other agent (e.g, a computer
+      program) attempting to perform an OpenID Email Address Transform
+      operation.
+
+   OpenID Identifier  An OpenID URL or OpenID XRI [XRI_Resolution_2.0] .
+
+   OpenID URL  An "http" or "https" schemed URI [RFC3986] (commonly
+      referred to as a "URL" within this document) which can be used in
+      the OpenID protocol.
+
+
+
+
+
+
+Fuelling                                                        [Page 5]
+
+                                  OEAT                         June 2008
+
+
+   OpenID XRI  An XRI identifier that can be used in the OpenID
+      protocol.
+
+   Email Address:  An RFC2822 [RFC2822] compatible Email address.
+
+   Email Identifier:  An Email Address that was presented to the
+      Processing Agent.  The Email Identifier can be normalized and
+      transformed into an OpenID Identifier.
+
+   Normalized Email Identifier:  An RFC2822 'Addr-spec' compatible email
+      address that can be used in the OpenID Email Address Tranformation
+      Extension.  This Identifier is typically the result of normalizing
+      (Section 5) an Email Identifier, and consists of a 'local-part'
+      and a 'domain' part, separated by an '@' sign.
+
+   Discovery Endpoint URL:  A URL that can be dereferenced to obtain an
+      XRDS-Simple document listing the supported transformation
+      mechanisms for a particular email address.  This URL is formed by
+      taking the 'domain' portion of a Normalized Email Identifier, and
+      following the steps outlined in Determining the OEAT Discovery
+      Endpoint URL (Section 6.1) .
+
+   Email Address To OpenID Service (EATOID Service)  A web-based service
+      that accepts a particular RFC2822 email address, and returns a 302
+      redirect to an OpenID Identifier.
+
+   EATOID Service Endpoint URL  A URL where a particular EATOID Service
+      can be accessed.
+
+   Email Address Transform Template (ETT)  A URI, possibly containing a
+      Wildcard Replacement Token.
+
+   Wildcard Replacement Token  A string surrounded by an opening-brace
+      and a closing-brace, in that order (such as [username]).  The
+      Wildcard Replacement Token is used inside of an ETT to designate
+      how an OP structures its OpenID URL Identifiers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 6]
+
+                                  OEAT                         June 2008
+
+
+3.  Protocol Overview
+
+   1.  An Email Address is presented to the Processing-Agent.
+
+   2.  The Email Address is normalized (Section 5) to produce a
+       Normalized Email Identifier.
+
+   3.  The Processing-Agent then performs discovery (Section 6) on the
+       Normalized Email Identifier and retrieves an XRDS-Simple document
+       containing one or more values representing an OpenID Identifier
+       (an OpenID URL or OpenID XRI); an Email Address Transform
+       Template URL (ETT); and/or an EATOID Service Endpoint URL.
+
+   4.  (Optional) If an ETT is found, it can be used to transform
+       (Section 7) the Normalized Email Identifier into an OpenID
+       Identifier.
+
+   5.  (Optional) If an EATOID Service Endpoint is found, it can be used
+       to query the EATOID Service to determine the OpenID Identifier
+       associated with the supplied email address.
+
+   6.  The resulting OpenID Identifier can then be used in an OpenID
+       Authentication transaction.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 7]
+
+                                  OEAT                         June 2008
+
+
+4.  Reccommend Usage in OpenID Authentication 2.0
+
+   This protocol extension results in an OpenID Identifier that can be
+   utilized by a Relying Party to initiate OpenID Authentication.
+
+   Traditionally, OpenID Authentication 2.0 allows a User-Supplied
+   Identifier to be an Identifier that is presented by the end user to
+   the Relying Party, or selected by the user at the OpenID Provider.
+   During the initiation phase of the OpenID 2.0 Authentication
+   protocol, an end user may enter either their own Identifier or an OP
+   Identifier.  If an OP Identifier is used, the OP may then assist the
+   end user in selecting an Identifier to share with the Relying Party.
+
+   Using this extension, OpenID Relying parties can extend the
+   definition of a User-Supplied Identifier to include an Email
+   Identifier as follows:
+
+   A User-Supplied Identifier is an OpenID Identifier or Email
+   Identifier that was presented by the end user to the Relying Party,
+   or an Identifier selected by the user at the OpenID Provider.  During
+   the initiation phase of the protocol, an end user may enter either
+   their own Identifier, an OP Identifier, or an Email Identifier.  If
+   an OP Identifier is used, the OP may then assist the end user in
+   selecting an Identifier to share with the Relying Party.  If an Email
+   Identifier is used, this identifier will be transformed into its
+   corresponding OpenID URL or OpenID XRI, and used as a traditional
+   User-Supplied Identifier in OpenID 2.0 Authentication.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                        [Page 8]
+
+                                  OEAT                         June 2008
+
+
+5.  Normalization
+
+   The Email Identifier provided to the Processing Agent MUST be
+   normalized into a Normalized Email Identifier, as follows:
+
+   1.  If the Email Identifier contains one or more comma's (ASCII #2C
+       or ','), then all comma's in the Email Identifier SHALL be
+       converted into semi-colon's (ASCII #3B or ';') using the ASCII
+       character set.
+
+
+   2.  The resulting Email Identifier must be broken up into tokens
+       using a semi-colon delmiter.  The first token ONLY becomes the
+       new Email Identifier for purposes of Normalization.
+
+
+   3.  If the resulting Email Identifier contains more than 1 'less-
+       than' (ASCII #3C or '<') character and/or more than one 'greater-
+       than' (ASCII #3E or '>') character, then the Email Identifier is
+       considered to be invalid, and the transformation process SHOULD
+       fail.
+
+
+   4.  If the resulting Email Identifier contains a single 'less-than'
+       character, it SHOULD also contain a 'greater-than' character at
+       some point after the 'less-than' character.  If only one, but not
+       both, of these character are present in the Email Identifier,
+       then the Email Identifier is considered to be invalid, and the
+       transformation process SHOULD fail.
+
+
+   5.  If a single 'less-than' character and a single 'greater-than'
+       character are both present in the Email Identifier, all text up
+       to and including the 'less-than' character MUST be removed and
+       discarded.  In addition, all text from the 'greater-than'
+       character inclusive, to the end of the Email Identifier MUST be
+       removed and discarded.  For example, the Email Identifier 'Beth
+       "I'm cool" Jones" <beth@example.com>' MUST become
+       'beth@example.com' (single quotes are for clarity, and not part
+       of the actual protocol).
+
+
+   6.  Email Identifiers MUST then be further normalized to conform to
+       section 3.4.1 (Addr-spec specification) of RFC2822.  After
+       completing this Normalization process, the Email Identifier MUST
+       be a valid Addr-spec as defined by RFC2822, and SHOULD be of the
+       following form: addr-spec = local-part "@" domain
+
+
+
+
+Fuelling                                                        [Page 9]
+
+                                  OEAT                         June 2008
+
+
+   7.  After all normalization steps have been complete, the resulting
+       ASCII string is known as the Normalized Email Identifier.
+
+   See the normalization examples (Appendix A.1) for further valid and
+   invalid examples of an Email Identifier that has been fully
+   normalized.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 10]
+
+                                  OEAT                         June 2008
+
+
+6.  OEAT Discovery
+
+   OEAT Discovery is the process by which a Processing Agent utilizes a
+   Discovery Endpoint URL to look up ("discover") the information
+   necessary for transforming a Normalized Email Identifier into an
+   OpenID Identifier (an OpenID URL or OpenID XRI).  This extension
+   protocol has only one path through which to do discovery:
+
+   1.  The XRDS-Simple [XRDS-Simple] SHALL be attempted on the OEAT
+       Discovery Endpoint URL.  If it succeeds, the result is an XRDS-
+       Simple document that contains the necessary information for the
+       protocol to continue.  If more than one applicable Service
+       Element is returned in the XRDS-Simple document, the precedence
+       rules defined in [XRI_Resolution_2.0] are to be applied.
+
+   If the XRDS-Simple protocol fails for any reason (e.g., no valid
+   XRDS-Simple document is retrieved, or no valid Service Elements
+   (Section 6.3.1) are found in the XRDS-Simple document), then
+   discovery is considered to have failed for the supplied OEAT
+   Discovery Endpoint URL.
+
+6.1.  Determining the OEAT Discovery Endpoint URL
+
+   In order to obtain a Discovery Endpoint URL from a Normalized Email
+   Address, the following process MUST be followed:
+
+   1.  Parse the Normalized Email Address using the 'at sign' ('@' ASCII
+       #40) as a delimeter.  The result of this parsing operation SHOULD
+       be two tokens, the second of which will be the 'domain' of the
+       Email Address as defined by RFC2822, section 3.4.1.  (The first
+       token will be the 'local-part' as defined by RFC2822).  The first
+       token SHOULD be discarded, leaving the second token, which is the
+       'domain'.
+
+
+   2.  Using the 'domain' result from the first step, prepend the string
+       "http://" to it.
+
+
+   3.  The resulting URL is a valid OEAT Discovery Endpoint URL, and can
+       be used to perform OEAT Discovery.
+
+
+   4.  If OEAT Discovery is not successful on the OEAT Discovery
+       Endpoint URL obtained in the step above (i.e., no XRDS-Simple
+       document is found, or no valid Service Elements are found in the
+       XRDS-Simple document), then a new URL should be assembled by
+       starting with the 'domain' result from the first step, and
+
+
+
+Fuelling                                                       [Page 11]
+
+                                  OEAT                         June 2008
+
+
+       prepending the string "http://www." to it.
+
+
+   5.  The resulting URL is a valid OEAT Discovery Endpoint URL and can
+       be used to perform OEAT Discovery.  If OEAT Discovery is again
+       unsuccessful on this final Endpoint URL, then Email Address
+       Transformation is not possible with the supplied Email Address.
+       The Processing Agent SHOULD treat the supplied Email Address as
+       it would any other invalid User-Supplied Identifier.
+
+6.2.  Discovered Information
+
+   Upon successful completion of OEAT Discovery, the Processing Agent
+   will have an XRDS-Simple document containing the Email Address
+   Transform Protocol version, as well as one or more of the following
+   pieces of information:
+
+   o  OP Endpoint URL
+
+   o  ETT URL
+
+   o  EATOID Service Endpoint URL
+
+   The OP Endpoint URL can be used in existing OpenID Authentication
+   protocols.  If an ETT is discovered instead of an OP Endpoint URL or
+   EATOID URL, the ETT SHOULD be used to transform the Normalized Email
+   Identifier into an OpenID Identifier.
+
+6.3.  XRDS-Based Discovery
+
+   If XRDS-Simple discovery was successful, the result will be an XRDS-
+   Simple Document, which is defined in [XRDS-Simple].  This is an XML
+   document with entries for services that are related to the Normalized
+   Email Identifier.
+
+6.3.1.  Valid Service Type Elements
+
+   For non-normative examples of XRDS-Simple Service Elements supported
+   by this protocol, see the XRDS Examples (Appendix A.3) section.
+
+6.3.1.1.  Service Type: OpenID URL
+
+   An OpenID URL Element is an <xrd:Service> element with the following
+   information:
+
+   o  An <xrd:Type> tag whose text content is
+      "http://specs.openid.net/auth/2.0/server".
+
+
+
+
+Fuelling                                                       [Page 12]
+
+                                  OEAT                         June 2008
+
+
+   o  An <xrd:URI> tag whose text content is an OP Endpoint URL as
+      defined in OpenID Authentication 2.0.
+
+6.3.1.2.  Service Type: ETT
+
+   An Email Address Transform Template (ETT) Element is an <xrd:Service>
+   element with the following information:
+
+   o  An <xrd:Type> tag whose text content is
+      "http://specs.openid.net/oeat/1.0/ett".
+
+   o  An <xrd:URI> tag whose text content is an an Email Address
+      Transform URL (ETT).
+
+6.3.1.3.  Service Type: EATOID
+
+   An EATOID Service Type is an <xrd:Service> element with the following
+   information:
+
+   o  An <xrd:Type> tag whose text content is
+      "http://specs.openid.net/oeat/1.0/eatoid".
+
+   o  An <xrd:URI> tag whose text content is an an EATOID Endpoint URL.
+
+6.3.2.  Extracting the OpenID URL, ETT, or EATOID Endpoint URL
+
+   Once the Processing Agent has obtained an XRDS document, it MUST
+   first search the document (following the rules described in
+   [XRI_Resolution_2.0]) for either a valid OpenID URL, an ETT, or an
+   EATOID Endpoint URL.  If none of these are found, then the OEAT
+   protocol fails.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 13]
+
+                                  OEAT                         June 2008
+
+
+7.  Tranforming an Email Address using an ETT
+
+   In order to transform a Normalized Email Address into an OpenID URL,
+   a Processing Agent may utilize a valid Email Address Tranform
+   Template (ETT).  This section details the structure of the ETT, as
+   well as the steps necessary to transform an Email Address into an
+   OpenID URL using an ETT.
+
+7.1.  ETT Structure
+
+   An Email Address Transform Template (ETT) is an absolute URI that
+   contains zero or more Wildcard Replacement Fields, each of which are
+   textual character(s) surrounded by an opening-bracket ('[' ASCII #5B
+   ) on the left, and a closing-bracket (']' ASCII #5D) on the right.
+
+   As of this version of the Transform protocol, the only allowed
+   replacement field is 'username'.
+
+   Because the 'opening-bracket' and 'closing-bracket' characters are
+   prohibited by the URI syntax, these characters MUST be percent-
+   encoded per section 2.1 of the URI Specification before being
+   included in an XRDS document.
+
+7.2.  ETT Validity
+
+7.2.1.  Valid ETT
+
+   An Email Address Transform Template (ETT) is considered to be valid
+   if it is either a valid URI, or a URI with a Wildcard Replacement
+   Field as allowed by this protocol.  Currently, only the [username]
+   Wildcard Replacement Field is defined and allowed.
+
+7.2.2.  Invalid ETT
+
+   An Email Address Transform Template (ETT) is considered to be invalid
+   if the ETT has any of the following properties:
+
+   o  It contains more than one of either kind of bracket.
+
+   o  It contains an odd number of brackets.
+
+   An invalid ETT MUST NOT be used in an Email Address Transform
+   operation.
+
+7.3.  ETT Tranform Procedure
+
+   In order to transform a Normalized Email Address into an OpenID URL,
+   Processing Agents may use a valid Email Address Tranform Template
+
+
+
+Fuelling                                                       [Page 14]
+
+                                  OEAT                         June 2008
+
+
+   (ETT).  If the valid ETT does not contain any Wildcard Replacement
+   Fields, then the transform is complete: The ETT is the OpenID URL,
+   and this transform extension protocol ends.
+
+   However, if the ETT does contain a Wildcard Replacement Field, then
+   the following procedure is used to transform the Normalized Email
+   Address into an OpenID URL using an ETT:
+
+   1.  Tokenize the Normalized Email Address using the 'at sign' ('@'
+       ASCII #40) as a delimeter.  The result of this parsing operation
+       SHOULD be two tokens, the first of which will be the 'local-part'
+       of the Email Address as defined by RFC2822, section 3.4.1.  (The
+       second token will be the 'domain).
+
+
+   2.  The ETT should be percent-decoded per section 2.1 of the URI
+       specification.  Specifically, %5B should be decoded to be the
+       opening-bracket, while %5D should be decoded to be the closing
+       bracket, but only where these two characters surround a valid
+       Wildcard Replacement String (such as 'username').
+
+
+   3.  Next, in the ETT replace the portion of the ETT that contains
+       '[username]' (excluding single-quotes) with the value of the
+       'local-part' portion of the email address.
+
+
+   4.  The resulting URI is a valid OpenID URL (Note that this URL will
+       likely be treated as a Claimed Identifier, although this is
+       ultimately OP-implementation defined).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 15]
+
+                                  OEAT                         June 2008
+
+
+8.  Tranforming an Email Address using an EATOID Service
+
+   In order to transform a Normalized Email Address into an OpenID
+   Identifier, Processing Agents may utilize an Email-Address-to-OpenID
+   (EATOID) Service.  This section details how Processing Agents can
+   access such service endpoints, and the expected results that MUST be
+   returned.
+
+8.1.  EATOID Service Query
+
+   In order to query an EATOID Service, a Processing Agent SHOULD issue
+   an HTTP GET request on the EATOID Service's Endpoint URL.  The GET
+   request must contain an attribute named 'email', with the Normalized
+   Email Identifier as the value of this attribute.  If more than one
+   'email' attribute is specified in the GET query, then EATOID Service
+   Endpoints SHOULD utilize only the first attribute in the query
+   string.  See Appendix A.4 for a non-normative example of an EATOID
+   Service Query.
+
+8.2.  EATOID Service Result
+
+   After receiving an EATOID Service Query, an EATOID Service MUST
+   return return an HTTP redirect (a 302) to an appropriately mapped
+   OpenID URL.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 16]
+
+                                  OEAT                         June 2008
+
+
+9.  Security Considerations
+
+9.1.  Man-in-the-Middle Attacks
+
+   If DNS resolution or the transport layer is compromised, this
+   protocol is not fully secure since the attacker can impersonate the
+   OP and tamper with the discovery process.  If an attacker can tamper
+   with the discovery process he/she can specify any OP, and so does not
+   have to impersonate the OP.  Additionally, if an attacker can
+   compromise the integrity of the information returned during the
+   discovery process, by altering the XRDS document, the need for a man
+   in the middle is removed.  In such an attack, a forged OpenID
+   Endpoint URL, forged ETT, or forged EATOID Endpoint URL could be
+   returned.  One method to prevent this sort of attack is by digitally
+   signing the XRDS file as per XMLDSIG [RFC3275] .  The keying material
+   is not specified, since the RP ultimately needs to make its own
+   decision whether to trust keys used for such a signature.
+
+   Using SSL with certificates signed by a trusted authority prevents
+   these kinds of attacks by verifying the results of the DNS look-up
+   against the certificate.  Once the validity of the certificate has
+   been established, tampering is not possible.  Impersonating an SSL
+   server requires forging or stealing a certificate, which is
+   significantly harder than the network based attacks.
+
+   In order to get protection from SSL, SSL must be used for all parts
+   of this protocol, While the protocol does not require SSL be used,
+   its use is strongly RECOMMENDED.  Current best practices dictate that
+   an OP SHOULD use SSL, with a certificate signed by a trusted
+   authority, to secure its Endpoint URL as well as the interactions
+   with the Processing Agent.  In addition, SSL, with a certificate
+   signed by a trusted authority, SHOULD be used so that a Relying Party
+   can fetch the end user's URL in a secure manner.  Following its own
+   security policies, a Processing-Agent MAY choose to not complete, or
+   even begin, a transaction if SSL is not being correctly used at these
+   various endpoints.
+
+9.2.  EATOID Email-Address Harvesting Attack
+
+   EATOID Service Endpoints may be prone to an email address harvesting
+   attack if the EATOID Service returns different HTTP codes for
+   different email addresses.  For example, if an EATOID service
+   determines that a particular email address is not actually in use,
+   and then returns a special result message to indicate this, an
+   attacker could utilize this information in order to determine if a
+   particular email address is valid or not for a particular domain.
+   Thus, in order to reduce the risk of email address harvesting
+   attacks, an EATOID Service should always redirect to a well-formed
+
+
+
+Fuelling                                                       [Page 17]
+
+                                  OEAT                         June 2008
+
+
+   URL, even if the system is unable to verify that supplied email
+   address actually corresponds to a valid OpenID Identifier.  In this
+   way, an attacker will not be able to determine if a particular email
+   address is actually registered with the EATOID service.
+
+9.3.  OP Email-Address Harvesting Attack
+
+   OP's should be careful to always resolve a particular OpenID URL,
+   even if that OpenID URL is not a valid OpenID in the OP system.  If a
+   particular OP does not resolve *all* OpenID Identifier URL's, then an
+   email address harvesting attack could utilize an OEAT Service
+   Endpoint to determine which email addresses correspond to valid
+   OpenID Identifiers, thus increasing the value of harvested email
+   addresses.  This reccomendation holds true outside of this
+   specification, although it is highlighted here because OEAT can
+   exacerbate this problem by possibly connecting an email address to a
+   particular OpenID Identifier URL.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 18]
+
+                                  OEAT                         June 2008
+
+
+10.  Acknowledgements
+
+   Textual portions of the OpenID Authentication 2.0 and XML portions of
+   the OpenID Attribute Exchange 1.0 specifications were used in the
+   creation of this extension document.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 19]
+
+                                  OEAT                         June 2008
+
+
+Appendix A.  Examples
+
+   Non-normative
+
+Appendix A.1.  Email Address Normalization
+
+   +-----------------------------------------+----------------+--------+
+   |     Supplied Email Address              |     Normalized |        |
+   |                                         | Email Address  |  Valid |
+   |                                         |                |        |
+   +-----------------------------------------+----------------+--------+
+   |     beth@example.com                    |                |        |
+   |                                         | beth@example.c |  valid |
+   |                                         | om             |        |
+   |                                         |                |        |
+   |     Beth jones <beth@example.com>       |                |        |
+   |                                         | beth@example.c |  valid |
+   |                                         | om             |        |
+   |                                         |                |        |
+   |     <beth@example.com> Beth jones       |                |        |
+   |                                         | beth@example.c |  valid |
+   |                                         | om             |        |
+   |                                         |                |        |
+   |     Bethany "Beth" Jones                |                |        |
+   | <beth@example.com>                      | beth@example.c |  valid |
+   |                                         | om             |        |
+   |                                         |                |        |
+   |                                         |                |        |
+   | beth@example.com;bob@example.com,mallor | beth@example.c |  valid |
+   | y@example.com                           | om             |        |
+   |                                         |                |        |
+   |                                         |                |        |
+   | mallory@example.com,beth@example.com,bo | mallory@exampl |  valid |
+   | b@example.com                           | e.com          |        |
+   |                                         |                |        |
+   |     <Beth jones <beth@example.com>      |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   |                                         |                |        |
+   |     Beth jones> <beth@example.com>      |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   |                                         |                |        |
+   |     Beth jones <<beth@example.com>      |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   |                                         |                |        |
+
+
+
+
+Fuelling                                                       [Page 20]
+
+                                  OEAT                         June 2008
+
+
+   |     <Beth jones> <beth@example.com>     |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   |                                         |                |        |
+   |     <Beth Jones>                        |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   |                                         |                |        |
+   |     <beth@example.com> <Beth jones>     |     n/a        |        |
+   |                                         |                | invali |
+   |                                         |                | d      |
+   +-----------------------------------------+----------------+--------+
+
+              Email Address Supplied to the Processing Agent
+
+Appendix A.2.  ETT Examples
+   https://[username].example.com/
+   https://www.example.com/server/[username]
+
+Appendix A.3.  XRDS Service Element Examples
+
+Appendix A.3.1.  ETT Service Element Example 1
+
+   For a Normalized Email Address 'beth@example.com' to transform to the
+   OpenID URL 'https://beth.example.com', the following XML snippet
+   should be present in the the XRDS file when discovery is preformed on
+   "https://example.com/" or "https://www.example.com":
+
+
+   <Service xmlns="xri://$xrd*($v*2.0)">
+     <Type>http://specs.openid.net/oeat/1.0/ett</Type>
+     <URI>https://%5Busername%5D.example.com/</URI>
+   </Service>
+
+
+Appendix A.3.2.  ETT Service Element Example 2
+
+   For a Normalized Email Address 'beth@example.com' to transform to the
+   OpenID URL 'https://www.example.com/openid/personas/beth', the
+   following XML snippet should be present in the the XRDS file when
+   discovery is preformed on "https://example.com/" or
+   "https://www.example.com":
+
+
+   <Service xmlns="xri://$xrd*($v*2.0)">
+     <Type>http://specs.openid.net/oeat/1.0/ett</Type>
+     <URI>https://www.example.com/openid/personas/%5Busername%5D/</URI>
+   </Service>
+
+
+
+Fuelling                                                       [Page 21]
+
+                                  OEAT                         June 2008
+
+
+Appendix A.4.  EATOID HTTP Query Example
+
+   The following is an example HTTP GET request that could be used to
+   determine the OpenID Identifier for a Normalized Email Address of
+   'beth@example.com'.
+
+
+   #GET OpenID Identifier Equivalent
+   GET /?email%3Dbeth@example.com HTTP/1.1
+   Date: Wed, 08 Jun 2008 04:06:18 GMT
+   Host: eatoid.example.com
+
+
+Appendix A.5.  EATOID HTTP Result Example
+
+   The following is an example EATOID Service response containing a 302
+   redirect code:
+
+
+   #302 Redirect to OpenID Identifier
+   HTTP/1.1 302 Found
+   Location: http://openid.example.com/people/beth
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 22]
+
+                                  OEAT                         June 2008
+
+
+11.  Normative References
+
+   [ASCII]    The Unicode Consortium, "The ASCII subset of the Unicode
+              Standard 5.0".
+
+   [OpenID.authentication-2.0]
+              OpenID Foundation, "OpenID Authentication 2.0 - Final",
+              December 2007.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", RFC 2119.
+
+   [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
+              Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
+              Transfer Protocol -- HTTP/1.1", RFC 2616.
+
+   [RFC2822]  Resnick, P., "Internet Message Format", RFC 2822.
+
+   [RFC3275]  Eastlake 3rd, D., Reagle Jr., J., and D. Solo,
+              "(Extensible Markup Language) XML-Signature Syntax and
+              Processing", RFC 3275.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", RFC 3986.
+
+   [XRDS-Simple]
+              Hammer-Lahav, Eran., "XRDS-Simple 1.0".
+
+   [XRI_Resolution_2.0]
+              Wachob, G., Reed, D., Chasen, L., Tan, W., and S.
+              Churchill, "Extensible Resource Identifier (XRI)
+              Resolution V2.0 - Working Draft 10",
+              <http://www.oasis-open.org/committees/download.php/17293>.
+
+   [XRI_Syntax_2.0]
+              Reed, D. and D. McAlpin, "Extensible Resource Identifier
+              (XRI) Syntax V2.0",
+              <http://www.oasis-open.org/committees/download.php/15376>.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 23]
+
+                                  OEAT                         June 2008
+
+
+Author's Address
+
+   David Fuelling
+   Sappenin Technologies, LLC
+   Salt Lake City, UT  84117
+   USA
+
+   Email: sappenin@gmail.com
+   URI:   http://www.sappenin.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fuelling                                                       [Page 24]
+
+
