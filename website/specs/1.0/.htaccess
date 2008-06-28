@@ -2,5 +2,5 @@ Options +Multiviews
 <IfModule rewrite_module>
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule .* index.html [QSA,L]
+	RewriteRule .* ../svn/tags/1.0-draft3/email-to-url-transformation-1_0.html [QSA,L]
 </IfModule>
