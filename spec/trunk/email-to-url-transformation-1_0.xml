@@ -166,7 +166,8 @@
 				To provide feedback on this draft, join the Google
 				Groups discussion list at
 				<eref
-					target="http://groups.google.com/group/email-address-to-openid">http://groups.google.com/group/email-address-to-openid
+					target="http://groups.google.com/group/email-address-to-openid">
+					http://groups.google.com/group/email-address-to-openid
 				</eref>
 				. For more general information about this protocol,
 				please consult
@@ -195,11 +196,13 @@
 				<list style="hanging">
 
 					<t hangText="Email Identifier:">
-						An <xref target="RFC2822" /> "addr-spec" compatible 
-						email address that can be used in the Email Address 
-						to URL Transformation protocol. This address consists
-						of a "local-part" and a "domain" part, separated
-						by an "@" sign.
+						An
+						<xref target="RFC2822" />
+						"addr-spec" compatible email address that can be
+						used in the Email Address to URL Transformation
+						protocol. This address consists of a
+						"local-part" and a "domain" part, separated by
+						an "@" sign.
 					</t>
 					<t hangText="Processing-Agent">
 						An agent (e.g, a computer program) attempting to
@@ -339,15 +342,16 @@
 					<list style="numbers">
 						<t>
 							Parse the Email Identifier using the "at
-							sign" ("@" <xref target="ASCII" /> #40) as 
-							a delimiter. The result of this parsing 
-							operation SHOULD be two tokens, the second 
-							of which will be the "domain" of the Email 
-							Identifier as defined by RFC2822, section 
-							3.4.1. (The first token will be the 
-							"local-part" as defined by RFC2822). The 
-							first token SHOULD be discarded, leaving 
-							the second token, which is the "domain".
+							sign" ("@"
+							<xref target="ASCII" />
+							#40) as a delimiter. The result of this
+							parsing operation SHOULD be two tokens, the
+							second of which will be the "domain" of the
+							Email Identifier as defined by RFC2822,
+							section 3.4.1. (The first token will be the
+							"local-part" as defined by RFC2822). The
+							first token SHOULD be discarded, leaving the
+							second token, which is the "domain".
 							<vspace blankLines="1" />
 						</t>
 						<t>
@@ -546,9 +550,7 @@
 								It contains more than one of either kind
 								of brace.
 							</t>
-							<t>
-								It contains an odd number of braces.
-							</t>
+							<t>It contains an odd number of braces.</t>
 						</list>
 
 						An invalid EAUT Template MUST NOT be used in an
@@ -777,8 +779,8 @@
 					An EAUT Template does not contain active or
 					executable content. However, other security
 					considerations are the same as those for URIs. See
-					<xref target="RFC3986" />, section 7 for more 
-					details.
+					<xref target="RFC3986" />
+					, section 7 for more details.
 				</t>
 			</section>
 
@@ -786,16 +788,13 @@
 		<section title="Acknowledgements">
 			<t>
 				Textual portions of this document were modeled on or
-				inspired by 
-				<xref target="OpenID.authentication-2.0">
-					OpenID Authentication 2.0
-				</xref> 
+				inspired by
+				<xref target="OpenID.authentication-2.0" />
 				and
-				<xref target="draft-gregorio-uritemplate-03">
-					URI Template
-				</xref>
-				. XML portions of the OpenID Attribute Exchange 1.0
-				specifications were also used in the creation of this
+				<xref target="URI Template" />
+				. XML portions of the
+				<xref target="OpenID Attribute Exchange" />
+				specification was also used in the creation of this
 				document.
 			</t>
 		</section>
@@ -964,42 +963,42 @@ Location: http://openid.example.com/people/beth
 				<seriesInfo name="RFC" value="2119" />
 			</reference>
 			<!--
-			<reference anchor="RFC2616">
+				<reference anchor="RFC2616">
 				<front>
-					<title>
-						Hypertext Transfer Protocol - HTTP/1.1
-					</title>
-					<author initials="R.F" surname="Fielding"
-						fullname="R. Fielding">
-						<organization>UC Irvine</organization>
-					</author>
-					<author initials="J.G" surname="Gettys"
-						fullname="J. Gettys">
-						<organization>Compaq/W3C</organization>
-					</author>
-					<author initials="J.M" surname="Mogul"
-						fullname="J. Mogul">
-						<organization>Compaq</organization>
-					</author>
-					<author initials="H.F" surname="Frystyk"
-						fullname="H. Frystyk">
-						<organization>W3C/MIT</organization>
-					</author>
-					<author initials="L.M" surname="Masinter"
-						fullname="L. Masinter">
-						<organization>Xerox</organization>
-					</author>
-					<author initials="P.L" surname="Leach"
-						fullname="P. Leach">
-						<organization>Microsoft</organization>
-					</author>
-					<author initials="T.L" surname="Berners-Lee"
-						fullname="T. Berners-Lee">
-						<organization>W3C/MIT</organization>
-					</author>
+				<title>
+				Hypertext Transfer Protocol - HTTP/1.1
+				</title>
+				<author initials="R.F" surname="Fielding"
+				fullname="R. Fielding">
+				<organization>UC Irvine</organization>
+				</author>
+				<author initials="J.G" surname="Gettys"
+				fullname="J. Gettys">
+				<organization>Compaq/W3C</organization>
+				</author>
+				<author initials="J.M" surname="Mogul"
+				fullname="J. Mogul">
+				<organization>Compaq</organization>
+				</author>
+				<author initials="H.F" surname="Frystyk"
+				fullname="H. Frystyk">
+				<organization>W3C/MIT</organization>
+				</author>
+				<author initials="L.M" surname="Masinter"
+				fullname="L. Masinter">
+				<organization>Xerox</organization>
+				</author>
+				<author initials="P.L" surname="Leach"
+				fullname="P. Leach">
+				<organization>Microsoft</organization>
+				</author>
+				<author initials="T.L" surname="Berners-Lee"
+				fullname="T. Berners-Lee">
+				<organization>W3C/MIT</organization>
+				</author>
 				</front>
 				<seriesInfo name="RFC" value="2616" />
-			</reference>
+				</reference>
 			-->
 			<reference anchor="RFC2822">
 				<front>
@@ -1168,7 +1167,7 @@ Location: http://openid.example.com/people/beth
 				<format type="HTML"
 					target="http://xrds-simple.net/core/1.0/" />
 			</reference>
-			<reference anchor="draft-gregorio-uritemplate-03">
+			<reference anchor="URI Template">
 				<front>
 					<title>URI Template</title>
 					<author initials="J.C." surname="Gregorio"
@@ -1207,6 +1206,41 @@ Location: http://openid.example.com/people/beth
 				</front>
 				<format type="HTML"
 					target="http://xrds-simple.net/core/1.0/" />
+			</reference>
+
+			<reference anchor="OpenID Attribute Exchange">
+				<front>
+					<title>OpenID Attribute Exchange</title>
+					<author initials="D.H." surname="Hardt"
+						fullname="Dick Hardt">
+						<organization>Sxip Identity</organization>
+						<address>
+							<email>dick@sxip.com</email>
+							<uri>dick@sxip.com</uri>
+						</address>
+					</author>
+					<author initials="J.B." surname="Bufu"
+						fullname="Johnny Bufu">
+						<organization>Sxip Identity</organization>
+						<address>
+							<email>johnny@sxip.com</email>
+							<uri>http://sxip.com/</uri>
+						</address>
+					</author>
+
+					<author initials="J.H." surname="Hoyt"
+						fullname="Josh Hoyt">
+						<organization>JanRain</organization>
+						<address>
+							<email>josh@janrain.com</email>
+							<uri>http://janrain.com/</uri>
+						</address>
+					</author>
+				</front>
+				<format type="TXT"
+					target="http://openid.net/specs/openid-attribute-exchange-1_0.txt" />
+				<format type="HTML"
+					target="http://openid.net/specs/openid-attribute-exchange-1_0.html" />
 			</reference>
 		</references>
 	</back>
