@@ -106,10 +106,10 @@
 ]>
 
 <rfc category="std" ipr="full3978"
-	docName="email-to-url-transformation-1_0-03.xml">
+	docName="email-to-url-transformation-1_0-05">
 	<front>
 		<title abbrev="EAUT">
-			Email Address to URL Transformation 1.0 - Draft 4
+			Email Address to URL Transformation 1.0 - Draft 5
 		</title>
 
 		<author initials="D.F." surname="Fuelling"
@@ -126,7 +126,7 @@
 					<country>USA</country>
 				</postal>
 				<email>sappenin@gmail.com</email>
-				<uri>http://www.sappenin.com</uri>
+				<uri>http://www.sappenin.com/</uri>
 			</address>
 		</author>
 
@@ -142,7 +142,7 @@
 					<country>USA</country>
 				</postal>
 				<email>will@willnorris.com</email>
-				<uri>http://willnorris.com/</uri>
+				<uri>http://will.norris.name/</uri>
 			</address>
 		</author>
 
@@ -195,9 +195,9 @@
 				<list style="hanging">
 
 					<t hangText="Email Identifier:">
-						An RFC2822 "addr-spec" compatible email address
-						that can be used in the Email Address to URL
-						Transformation protocol. This address consists
+						An <xref target="RFC2822" /> "addr-spec" compatible 
+						email address that can be used in the Email Address 
+						to URL Transformation protocol. This address consists
 						of a "local-part" and a "domain" part, separated
 						by an "@" sign.
 					</t>
@@ -339,15 +339,15 @@
 					<list style="numbers">
 						<t>
 							Parse the Email Identifier using the "at
-							sign" ("@" ASCII #40) as a delimiter. The
-							result of this parsing operation SHOULD be
-							two tokens, the second of which will be the
-							"domain" of the Email Identifier as defined
-							by RFC2822, section 3.4.1. (The first token
-							will be the "local-part" as defined by
-							RFC2822). The first token SHOULD be
-							discarded, leaving the second token, which
-							is the "domain".
+							sign" ("@" <xref target="ASCII" /> #40) as 
+							a delimiter. The result of this parsing 
+							operation SHOULD be two tokens, the second 
+							of which will be the "domain" of the Email 
+							Identifier as defined by RFC2822, section 
+							3.4.1. (The first token will be the 
+							"local-part" as defined by RFC2822). The 
+							first token SHOULD be discarded, leaving 
+							the second token, which is the "domain".
 							<vspace blankLines="1" />
 						</t>
 						<t>
@@ -514,7 +514,7 @@
 					As of this version of the Transform protocol, the
 					only allowed replacement field is "username".
 					<vspace blankLines="1" />
-					Because the "opening-bracket" and "closing-bracket"
+					Because the "opening-brace" and "closing-brace"
 					characters are prohibited by the URI syntax, these
 					characters MUST be percent-encoded per section 2.1
 					of the URI Specification before being included in an
@@ -544,10 +544,10 @@
 						<list style="symbols">
 							<t>
 								It contains more than one of either kind
-								of bracket.
+								of brace.
 							</t>
 							<t>
-								It contains an odd number of brackets.
+								It contains an odd number of braces.
 							</t>
 						</list>
 
@@ -586,9 +586,9 @@
 						<t>
 							The EAUT Template should be percent-decoded
 							per section 2.1 of the URI specification.
-							Specifically, %5B should be decoded to be
-							the opening-bracket, while %5D should be
-							decoded to be the closing bracket, but only
+							Specifically, %7B should be decoded to be
+							the opening-brace, while %7D should be
+							decoded to be the closing brace, but only
 							where these two characters surround a valid
 							Wildcard Replacement String (such as
 							"username").
@@ -777,7 +777,8 @@
 					An EAUT Template does not contain active or
 					executable content. However, other security
 					considerations are the same as those for URIs. See
-					RFC3986, section 7 for more details.
+					<xref target="RFC3986" />, section 7 for more 
+					details.
 				</t>
 			</section>
 
@@ -785,7 +786,11 @@
 		<section title="Acknowledgements">
 			<t>
 				Textual portions of this document were modeled on or
-				inspired by OpenID Authentication 2.0 and
+				inspired by 
+				<xref target="OpenID.authentication-2.0">
+					OpenID Authentication 2.0
+				</xref> 
+				and
 				<xref target="draft-gregorio-uritemplate-03">
 					URI Template
 				</xref>
@@ -827,7 +832,7 @@
 							<![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.eaut.org/1.0/template</Type>
-  <URI>https://%5Busername%5D.example.com/</URI>
+  <URI>https://%7Busername%7D.example.com/</URI>
 </Service>
 ]]>
 						</artwork>
@@ -851,7 +856,7 @@
 							<![CDATA[
 <Service xmlns="xri://$xrd*($v*2.0)">
   <Type>http://specs.eaut.org/1.0/template</Type>
-  <URI>https://www.example.com/openid/personas/%5Busername%5D/</URI>
+  <URI>https://www.example.com/openid/personas/%7Busername%7D/</URI>
 </Service>
 ]]>
 						</artwork>
@@ -958,10 +963,11 @@ Location: http://openid.example.com/people/beth
 				</front>
 				<seriesInfo name="RFC" value="2119" />
 			</reference>
+			<!--
 			<reference anchor="RFC2616">
 				<front>
 					<title>
-						Hypertext Transfer Protocol -- HTTP/1.1
+						Hypertext Transfer Protocol - HTTP/1.1
 					</title>
 					<author initials="R.F" surname="Fielding"
 						fullname="R. Fielding">
@@ -994,6 +1000,7 @@ Location: http://openid.example.com/people/beth
 				</front>
 				<seriesInfo name="RFC" value="2616" />
 			</reference>
+			-->
 			<reference anchor="RFC2822">
 				<front>
 					<title>Internet Message Format</title>
