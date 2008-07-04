@@ -16,8 +16,8 @@ from urlparse import urlparse
 from openid.yadis.services import getServiceEndpoints
 from openid.yadis.discover import DiscoveryFailure
 
-TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/mapping'
-MAPPER_TYPE = 'http://specs.eaut.net/1.0/eatoid'
+TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/template'
+MAPPER_TYPE = 'http://specs.eaut.net/1.0/mapping'
 FALLBACK_SERVICE = 'http://emailtoid.net/'
 
 VALID_TYPES = [TEMPLATE_TYPE, MAPPER_TYPE]
