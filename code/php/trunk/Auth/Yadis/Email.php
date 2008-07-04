@@ -14,17 +14,17 @@ require_once 'Auth/Yadis/Yadis.php';
 require_once 'Auth/OpenID.php';
 
 /**
- * XRDS type for Email Address Transformation Template.
+ * XRDS type for EAUT Template.
  */
 define('Auth_Yadis_EAUT_Template_Type', 'http://specs.eaut.org/1.0/template');
 
 /**
- * XRDS type for Email Address to ID mapper.
+ * XRDS type for EAUT Mapping Service.
  */
-define('Auth_Yadis_EAUT_Mapper_Type', 'http://specs.eaut.org/1.0/mapper');
+define('Auth_Yadis_EAUT_Mapper_Type', 'http://specs.eaut.org/1.0/mapping');
 
 /**
- * ETT Wildcard for username
+ * EAUT Wildcard for username
  */
 define('Auth_Yadis_EAUT_Wildcard_Username', '%7Busername%7D');
 
