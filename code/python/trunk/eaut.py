@@ -15,9 +15,10 @@ from urlparse import urlparse
 
 from openid.yadis.services import getServiceEndpoints
 from openid.yadis.discover import DiscoveryFailure
+from openid.fetchers import HTTPFetchingError
 
-TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/template'
-MAPPER_TYPE = 'http://specs.eaut.net/1.0/mapping'
+TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/ett'
+MAPPER_TYPE = 'http://specs.eaut.org/1.0/mapper'
 FALLBACK_SERVICE = 'http://emailtoid.net/'
 
 VALID_TYPES = [TEMPLATE_TYPE, MAPPER_TYPE]
@@ -38,8 +39,11 @@ def get_valid_services(url):
     If none are found, raise a NoValidEndpoints exception.
     
     """
-    domain, service_endpoints = getServiceEndpoints(url)
-    matched_endpoints = [i for i in service_endpoints if i.matchTypes(VALID_TYPES)]
+    try:
+        domain, service_endpoints = getServiceEndpoints(url)
+        matched_endpoints = [i for i in service_endpoints if i.matchTypes(VALID_TYPES)]
+    except HTTPFetchingError:
+        matched_endpoints = None
     if not matched_endpoints:
         raise NoValidEndpoints('No valid endpoints found at %s' %(url))
     return matched_endpoints
