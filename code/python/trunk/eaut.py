@@ -17,7 +17,7 @@ from openid.yadis.services import getServiceEndpoints
 from openid.yadis.discover import DiscoveryFailure
 from openid.fetchers import HTTPFetchingError
 
-TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/ett'
+TEMPLATE_TYPE = 'http://specs.eaut.org/1.0/template'
 MAPPER_TYPE = 'http://specs.eaut.org/1.0/mapper'
 FALLBACK_SERVICE = 'http://emailtoid.net/'
 
