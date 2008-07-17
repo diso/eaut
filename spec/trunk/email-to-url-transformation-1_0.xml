@@ -218,9 +218,8 @@
 						A URL that can be dereferenced to obtain an
 						XRDS-Simple document listing the supported
 						transformation mechanisms for a particular Email
-						Identifier. This URL is formed by taking the
-						"domain" portion of a Email Identifier, and
-						following the steps outlined in
+						Identifier. This URL is formed by following the
+						steps outlined in
 						<xref target="obtaining-discovery-endpoint">
 							Determining the EAUT Discovery Endpoint URL
 						</xref>
@@ -308,14 +307,16 @@
 				<list style="numbers">
 					<t>
 						<xref target="XRDS-Simple">XRDS-Simple</xref>
-						Document Retreival SHALL performed on the EAUT
-						Discovery Endpoint URL. If this process
+						Document Retreival SHALL be performed on the
+						EAUT Discovery Endpoint URL. If this process
 						succeeds, the result is an XRDS-Simple document
 						that contains the necessary information for the
 						protocol to continue. If more than one
 						applicable Service Element is returned in the
 						XRDS-Simple document, the precedence rules
-						defined in [XRDS-Simple] are to be applied.
+						defined in
+						<xref target="XRDS-Simple" />
+						are to be applied.
 					</t>
 				</list>
 			</t>
@@ -342,16 +343,18 @@
 					<list style="numbers">
 						<t>
 							Parse the Email Identifier using the "at
-							sign" ("@"
-							<xref target="ASCII" />
-							#40) as a delimiter. The result of this
-							parsing operation SHOULD be two tokens, the
-							second of which will be the "domain" of the
-							Email Identifier as defined by RFC2822,
-							section 3.4.1. (The first token will be the
-							"local-part" as defined by RFC2822). The
-							first token SHOULD be discarded, leaving the
-							second token, which is the "domain".
+							sign" ("@" ASCII code 64) as a delimiter.
+							The result of this parsing operation SHOULD
+							be two tokens, the second of which will be
+							the "domain" of the Email Identifier as
+							defined by
+							<xref target="RFC2822" />
+							, section 3.4.1. (The first token will be
+							the "local-part" as defined by
+							<xref target="RFC2822" />
+							). The first token SHOULD be discarded,
+							leaving the second token, which is the
+							"domain".
 							<vspace blankLines="1" />
 						</t>
 						<t>
@@ -411,9 +414,9 @@
 				<t>
 					If XRDS-Simple discovery was successful, the result
 					will be an XRDS-Simple Document, which is defined in
-					[XRDS-Simple]. This is an XML document with entries
-					for services that are related to the Email
-					Identifier.
+					<xref target="XRDS-Simple" />
+					. This is an XML document with entries for services
+					that are related to the Email Identifier.
 				</t>
 				<section title="Valid Service Type Elements"
 					anchor="valid_service_type_elements">
@@ -481,8 +484,9 @@
 					<t>
 						Once the Processing Agent has obtained an XRDS
 						document, it MUST first search the document
-						(following the rules described in [XRDS-Simple])
-						for either an EAUT Template or an EAUT Mapping
+						(following the rules described in
+						<xref target="XRDS-Simple" />
+						) for either an EAUT Template or an EAUT Mapping
 						Service Endpoint URL. If neither of these are
 						found, then the EAUT protocol fails.
 					</t>
@@ -512,8 +516,8 @@
 					An EAUT Template is an absolute URI that contains
 					zero or more Wildcard Replacement Fields, each of
 					which are textual character(s) surrounded by an
-					opening-brace ("{" ASCII #7B ) on the left, and a
-					closing-brace ("}" ASCII #7D) on the right.
+					opening-brace ("{" ASCII code 123) on the left, and
+					a closing-brace ("}" ASCII code 125) on the right.
 					<vspace blankLines="1" />
 					As of this version of the Transform protocol, the
 					only allowed replacement field is "username".
@@ -577,22 +581,27 @@
 					<list style="numbers">
 						<t>
 							Tokenize the Email Identifier using the "at
-							sign" ("@" ASCII #40) as a delimeter. The
-							result of this parsing operation SHOULD be
-							two tokens, the first of which will be the
-							"local-part" of the Email Identifier as
-							defined by RFC2822, section 3.4.1. (The
-							second token will be the "domain").
+							sign" ("@" ASCII code 64) as a delimeter.
+							The result of this parsing operation SHOULD
+							be two tokens, the first of which will be
+							the "local-part" of the Email Identifier as
+							defined by
+							<xref target="RFC2822" />
+							, section 3.4.1. (The second token will be
+							the "domain").
 							<vspace blankLines="1" />
 						</t>
 						<t>
 							The EAUT Template should be percent-decoded
 							per section 2.1 of the URI specification.
-							Specifically, %7B should be decoded to be
-							the opening-brace, while %7D should be
-							decoded to be the closing brace, but only
-							where these two characters surround a valid
-							Wildcard Replacement String (such as
+							Specifically,
+							<spanx style="verb">%7B</spanx>
+							should be decoded to be the opening-brace,
+							while
+							<spanx style="verb">%7D</spanx>
+							should be decoded to be the closing brace,
+							but only where these two characters surround
+							a valid Wildcard Replacement String (such as
 							"username").
 							<vspace blankLines="1" />
 						</t>
@@ -654,7 +663,9 @@
 						<t hangText="HTTP 400 (Bad Request)">
 							An HTTP 400 (Bad Request) if the supplied
 							Email Identifier is not properly formatted
-							per this spec and RFC2822.
+							per this spec and
+							<xref target="RFC2822" />
+							.
 						</t>
 
 						<t
@@ -962,44 +973,6 @@ Location: http://openid.example.com/people/beth
 				</front>
 				<seriesInfo name="RFC" value="2119" />
 			</reference>
-			<!--
-				<reference anchor="RFC2616">
-				<front>
-				<title>
-				Hypertext Transfer Protocol - HTTP/1.1
-				</title>
-				<author initials="R.F" surname="Fielding"
-				fullname="R. Fielding">
-				<organization>UC Irvine</organization>
-				</author>
-				<author initials="J.G" surname="Gettys"
-				fullname="J. Gettys">
-				<organization>Compaq/W3C</organization>
-				</author>
-				<author initials="J.M" surname="Mogul"
-				fullname="J. Mogul">
-				<organization>Compaq</organization>
-				</author>
-				<author initials="H.F" surname="Frystyk"
-				fullname="H. Frystyk">
-				<organization>W3C/MIT</organization>
-				</author>
-				<author initials="L.M" surname="Masinter"
-				fullname="L. Masinter">
-				<organization>Xerox</organization>
-				</author>
-				<author initials="P.L" surname="Leach"
-				fullname="P. Leach">
-				<organization>Microsoft</organization>
-				</author>
-				<author initials="T.L" surname="Berners-Lee"
-				fullname="T. Berners-Lee">
-				<organization>W3C/MIT</organization>
-				</author>
-				</front>
-				<seriesInfo name="RFC" value="2616" />
-				</reference>
-			-->
 			<reference anchor="RFC2822">
 				<front>
 					<title>Internet Message Format</title>
@@ -1012,22 +985,6 @@ Location: http://openid.example.com/people/beth
 				</front>
 				<seriesInfo name="RFC" value="2822" />
 			</reference>
-			<reference anchor="ASCII">
-				<front>
-					<title>
-						The ASCII subset of the Unicode Standard 5.0
-					</title>
-					<author fullname="The Unicode Consortium">
-						<organization>
-							The Unicode Consortium
-						</organization>
-					</author>
-				</front>
-				<format type="PDF"
-					target="http://www.unicode.org/charts/PDF/U0000.pdf" />
-			</reference>
-
-
 			<reference anchor="RFC3986">
 				<front>
 					<title>
@@ -1245,3 +1202,4 @@ Location: http://openid.example.com/people/beth
 		</references>
 	</back>
 </rfc>
+
