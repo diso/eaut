@@ -82,7 +82,7 @@ def return_openid(email_address, site_name=''):
     transform_type, uri = return_transform_information(matched_endpoints)
     openid_url = ''
     if transform_type == TEMPLATE_TYPE:
-        openid_url = uri.replace('[username]', email_username)
+        openid_url = uri.replace('{username}', email_username)
     elif transform_type == MAPPER_TYPE:
         scheme, netloc, path, params, query, fragment = urlparse(uri)
         if query:
