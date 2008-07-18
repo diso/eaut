@@ -42,7 +42,7 @@ def get_valid_services(url):
     try:
         domain, service_endpoints = getServiceEndpoints(url)
         matched_endpoints = [i for i in service_endpoints if i.matchTypes(VALID_TYPES)]
-    except HTTPFetchingError:
+    except (HTTPFetchingError, DiscoveryFailure):
         matched_endpoints = None
     if not matched_endpoints:
         raise NoValidEndpoints('No valid endpoints found at %s' %(url))
@@ -58,7 +58,7 @@ def return_transform_information(matched_endpoints):
     uri = matched_endpoints[0].uri
     return transform_type, uri
 
-def return_openid(email_address, site_name=''):
+def return_openid(email_address, site_name='', fallback=FALLBACK_SERVICE):
     """ Transform an email address into an OpenID.
     
     Accept a well-formed email address and return a string of the resulting
@@ -78,7 +78,7 @@ def return_openid(email_address, site_name=''):
     try:
         matched_endpoints = get_valid_services(xrds_url)
     except (DiscoveryFailure, NoValidEndpoints):
-        matched_endpoints = get_valid_services(FALLBACK_SERVICE)
+        matched_endpoints = get_valid_services(fallback)
     transform_type, uri = return_transform_information(matched_endpoints)
     openid_url = ''
     if transform_type == TEMPLATE_TYPE:
