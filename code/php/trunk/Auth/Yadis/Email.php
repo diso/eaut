@@ -62,10 +62,23 @@ function Auth_Yadis_Email_getID($email, $site_name = '') {
 
     $fetcher = Auth_Yadis_Yadis::getHTTPFetcher();
 
-    $services = Auth_Yadis_Email_getServices($domain, $fetcher);
-    if (empty($services)) {
-        $services = Auth_Yadis_Email_getServices(Auth_Yadis_Default_Email_Mapper, $fetcher);
-    }
+    $services = Auth_Yadis_Email_getServices('http://' . $domain, $fetcher);
+	if (empty($services)) {
+    	$services = Auth_Yadis_Email_getServices('http://www.' . $domain, $fetcher);
+		if (empty($services)) {
+			$services = Auth_Yadis_Email_getServices(Auth_Yadis_Default_Email_Mapper, $fetcher);
+		}
+	}
+
+	return Auth_Yadis_Email_resolve($services, $email);
+
+}
+
+/**
+ * Given a list of discovered XRDS Services and an email address, translate the email into a URL.
+ */
+function Auth_Yadis_Email_resolve($services, $email) {
+    list($user, $domain) = split('@', $email, 2);
 
     foreach ($services as $s) {
         $types = $s->getTypes();
@@ -102,11 +115,12 @@ function Auth_Yadis_Email_getID($email, $site_name = '') {
                 return $id;
             }
         }
-
     }
-
 }
 
+/**
+ * Perform XRDS discovery at the specified URI for any EAUT Services.
+ */
 function Auth_Yadis_Email_getServices($uri, $fetcher) {
     $uri = Auth_OpenID::normalizeUrl($uri);
 
