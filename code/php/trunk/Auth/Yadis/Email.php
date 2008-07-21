@@ -26,7 +26,7 @@ define('Auth_Yadis_EAUT_Mapper_Type', 'http://specs.eaut.org/1.0/mapping');
 /**
  * EAUT Wildcard for username
  */
-define('Auth_Yadis_EAUT_Wildcard_Username', '%7Busername%7D');
+define('Auth_Yadis_EAUT_Wildcard_Username', '(%7B|\{)username(%7D|\})');
 
 /**
  * Default service for email mapping.
@@ -79,7 +79,7 @@ function Auth_Yadis_Email_getID($email, $site_name = '') {
             switch ($t) {
                 case Auth_Yadis_EAUT_Template_Type:
                     // TODO verify valid EAUT Template
-                    $id =  preg_replace('/'.preg_quote(Auth_Yadis_EAUT_Wildcard_Username).'/', $user, $uris[0]);
+                    $id =  preg_replace('/'.Auth_Yadis_EAUT_Wildcard_Username.'/', $user, $uris[0]);
                     break;
 
                 case Auth_Yadis_EAUT_Mapper_Type:
