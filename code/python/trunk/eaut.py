@@ -74,15 +74,14 @@ def return_openid(email_address, site_name='', fallback=FALLBACK_SERVICE):
     
     """
     email_username, email_domain = email_address.split('@')
-    xrds_url = 'http://%s' % email_domain
-    try:
-        matched_endpoints = get_valid_services(xrds_url)
-    except (DiscoveryFailure, NoValidEndpoints):
+    basic_url = 'http://%s' % email_domain
+    www_url = 'http://www.%s' % email_domain
+    for url in [basic_url, www_url, fallback]:
         try:
-            xrds_url = 'http://www.%s' % email_domain
-            matched_endpoints = get_valid_services(xrds_url)
+            matched_endpoints = get_valid_services(url)
+            break
         except (DiscoveryFailure, NoValidEndpoints):
-            matched_endpoints = get_valid_services(fallback)
+            continue
     transform_type, uri = return_transform_information(matched_endpoints)
     openid_url = ''
     if transform_type == TEMPLATE_TYPE:
