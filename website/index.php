@@ -1,17 +1,7 @@
-<html>
-	<head>
-		<title>Email Address to URL Translation</title>
-		<link rel="stylesheet" type="text/css" href="/style.css" />
-	</head>
-
-	<body>
-
-		<ul id="menu">
-			<li><a href="/specs/1.0/">Specification</a></li>
-			<li><a href="/code/">Code</a></li>
-			<li><a href="/example/">Example</a></li>
-		</ul>
-
+<?php
+	$page_title = 'Email Address to URL Translation';
+	include './header.php';
+?>
 		<h1>Email Address to URL Translation (EAUT)</h1>
 
 		<p>An open protocol to allow standard email addresses to be transformed
@@ -49,5 +39,6 @@
 		recommended.  The need for any fallback service will diminish as email
 		providers begin to support EAUT natively.</p>
 
-	</body>
-</html>
+<?php
+	include './footer.php';
+?>
