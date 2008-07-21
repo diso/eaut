@@ -1,10 +1,7 @@
-<html>
-	<head>
-		<title>EAUT Libraries</title>
-		<link rel="stylesheet" type="text/css" href="/style.css" />
-	</head>
-
-	<body>
+<?php
+	$page_title = 'EAUT Libraries';
+	include '../header.php';
+?>
 
 		<h1>EAUT Libraries</h1>
 
@@ -28,5 +25,6 @@
 			<li><a href="http://eaut.googlecode.com/svn/code/python/trunk/eaut.py">Python EAUT Library</a></li>
 		</ul>
 
-	</body>
-</html>
+<?php
+	include '../footer.php';
+?>

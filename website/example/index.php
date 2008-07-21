@@ -1,9 +1,7 @@
-<html>
-	<head>
-		<title>EAUT Example</title>
-	</head>
-	<body>
-	
+<?php
+	$page_title = 'EAUT Example';
+	include '../header.php';
+?>
 		<h1>EAUT Example</h1>
 
 <?php
@@ -100,9 +98,9 @@ if (!empty($email)) {
 			<input type="submit" />
 		</form>
 
-	</body>
-</html>
 <?php
+	include '../footer.php';
+
 function isValidEmail($email) {
 	return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$", $email);
 }
