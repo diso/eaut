@@ -12,7 +12,7 @@ __author__ = 'Michael Richardson'
 __email__ = "michael.richardson@vidoop.com"
 
 import urllib
-from urlparse import urlparse
+from urlparse import urlparse, urlunparse
 
 from openid.yadis.services import getServiceEndpoints
 from openid.yadis.discover import DiscoveryFailure
@@ -78,7 +78,11 @@ def return_openid(email_address, site_name='', fallback=FALLBACK_SERVICE):
     try:
         matched_endpoints = get_valid_services(xrds_url)
     except (DiscoveryFailure, NoValidEndpoints):
-        matched_endpoints = get_valid_services(fallback)
+        try:
+            xrds_url = 'http://www.%s' % email_domain
+            matched_endpoints = get_valid_services(xrds_url)
+        except (DiscoveryFailure, NoValidEndpoints):
+            matched_endpoints = get_valid_services(fallback)
     transform_type, uri = return_transform_information(matched_endpoints)
     openid_url = ''
     if transform_type == TEMPLATE_TYPE:
