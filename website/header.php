@@ -11,4 +11,5 @@
 			<li><a href="/specs/1.0/">Specification</a></li>
 			<li><a href="/code/">Code</a></li>
 			<li><a href="/example/">Example</a></li>
+			<li><a href="http://groups.google.com/group/eaut" target="_blank">Google Group</a></li>
 		</ul>
