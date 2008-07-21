@@ -11,6 +11,7 @@ __version__ = "0.1"
 __author__ = 'Michael Richardson'
 __email__ = "michael.richardson@vidoop.com"
 
+import urllib
 from urlparse import urlparse
 
 from openid.yadis.services import getServiceEndpoints
@@ -22,7 +23,6 @@ MAPPER_TYPE = 'http://specs.eaut.org/1.0/mapping'
 FALLBACK_SERVICE = 'http://emailtoid.net/'
 
 VALID_TYPES = [TEMPLATE_TYPE, MAPPER_TYPE]
-
 
 class NoValidEndpoints(Exception):
     """ Exception for if a site has no valid email translation endpoints. """
@@ -82,7 +82,8 @@ def return_openid(email_address, site_name='', fallback=FALLBACK_SERVICE):
     transform_type, uri = return_transform_information(matched_endpoints)
     openid_url = ''
     if transform_type == TEMPLATE_TYPE:
-        openid_url = uri.replace('{username}', email_username)
+        encoded_uri = urllib.unquote(uri)
+        openid_url = encoded_uri.replace('{username}', email_username)
     elif transform_type == MAPPER_TYPE:
         scheme, netloc, path, params, query, fragment = urlparse(uri)
         if query:
