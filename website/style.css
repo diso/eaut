@@ -1,0 +1,14 @@
+body {
+	width: 700px;
+	margin: 0 auto;
+}
+
+#menu {
+	list-style: none; 
+}
+
+#menu li {
+	display: inline;
+	padding: 0 1em;
+}
+
