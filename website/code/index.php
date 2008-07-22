@@ -14,6 +14,20 @@
 
 		<ul>
 			<li><a href="http://eaut.googlecode.com/svn/code/php/trunk/">PHP EAUT Library</a></li>
+			<li>Example OpenID login:
+				<div style="margin-left: 1em;">
+<?php $code = <<<EOT
+<?php
+	require_once 'Auth/Yadis/Email.php';
+
+	\$url = Auth_Yadis_Email_getID("bob@example.com");
+	\$consumer->begin(\$url); //consumer is an Auth_OpenID_Consumer object
+?>
+EOT;
+highlight_string($code);
+?>
+				</div>
+			</li>
 		</ul>
 
 
