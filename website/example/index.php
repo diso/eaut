@@ -102,7 +102,7 @@ if (!empty($email)) {
 	include '../footer.php';
 
 function isValidEmail($email) {
-	return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$", $email);
+	return eregi("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", $email);
 }
 
 function getRedirectPath($url) {
