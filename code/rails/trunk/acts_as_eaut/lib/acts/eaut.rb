@@ -51,7 +51,7 @@ module Acts
           if options[:use_fallback_service]
             eaut_endpoint = get_eaut_endpoint(FALLBACK_SERVICE)
           else
-            raise( NoValidEndpoints, "No valid endpoints found at http://#{email_domain} and fallback service not in use.")
+            raise( NoValidEndpoints, "No valid EAUT endpoints found at http://#{email_domain} and fallback service not in use.")
           end
         end
         
@@ -66,7 +66,7 @@ module Acts
           response = Net::HTTP.start(mapper_uri.host) { |http|
             http.get(mapper_uri.path + '?' + mapper_uri.query)
           }
-          raise( OpenIDTranslationError, 'Invalid response from mapping service' ) if response.code != '302'
+          raise( OpenIDTranslationError, 'Invalid response from EAUT mapping service.' ) if response.code != '302'
           return response['location']
         end
 
@@ -78,7 +78,7 @@ module Acts
         endpoints = OpenID::Yadis.get_service_endpoints(url).flatten.select do |e| 
            e.respond_to?('match_types') && !e.match_types( VALID_TYPES ).empty? ? true : false
         end
-        raise( NoValidEndpoints, "No valid endpoints found at #{url}") if endpoints.empty?
+        raise( NoValidEndpoints, "No valid EAUT endpoints found at #{url}") if endpoints.empty?
         endpoints.first
       end
       
