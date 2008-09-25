@@ -41,6 +41,8 @@ module Acts
       # even though it is in the python lib....      
       def get_openid_for_email( email_address, options = {} )
         
+        { :use_fallback_service => true }.merge( options )
+        
         email_username, email_domain = email_address.split('@')
         
         begin
