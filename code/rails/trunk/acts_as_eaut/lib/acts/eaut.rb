@@ -39,14 +39,14 @@ module Acts
       # 
       # JC: The site_name parameter is not mentioned in the spec so I am not using it
       # even though it is in the python lib....      
-      def get_openid_for_email( email_address, use_fallback_service = true )
+      def get_openid_for_email( email_address, options = {} )
         
         email_username, email_domain = email_address.split('@')
         
         begin
           eaut_endpoint = get_eaut_endpoint("http://#{email_domain}")
         rescue OpenID::DiscoveryFailure, NoValidEndpoints
-          if use_fallback_service
+          if options[:use_fallback_service]
             eaut_endpoint = get_eaut_endpoint(FALLBACK_SERVICE)
           else
             raise( NoValidEndpoints, "No valid endpoints found at http://#{email_domain} and fallback service not in use.")
