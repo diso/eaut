@@ -96,7 +96,7 @@ if (!empty($email)) {
 				if ($response_code == '400') {
 					echo '<li>URL <em>' . $url . '</em> resulted in an HTTP 400 error.</li>';
 				} elseif ($response_code == '500') {
-					echo '<li>URL <em>' . $url . '</em> resulted in an HTTP 400 error.</li>';
+					echo '<li>URL <em>' . $url . '</em> resulted in an HTTP 500 error.</li>';
 				}
 				echo '</ul>';
 
