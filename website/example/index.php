@@ -83,9 +83,28 @@ if (!empty($email)) {
 						echo '<li>URL <em>' . $redirects[$i-1] . '</em> redirects to the URL <em>' . $redirects[$i] . '</em></li>';
 					}
 				}
+			
+				// setup curl connection
+				$url = $redirects[sizeof($redirects)-1];
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_HEADER, true);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+				$result = curl_exec($ch);
+				$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+				if ($response_code == '400') {
+					echo '<li>URL <em>' . $url . '</em> resulted in an HTTP 400 error.</li>';
+				} elseif ($response_code == '500') {
+					echo '<li>URL <em>' . $url . '</em> resulted in an HTTP 400 error.</li>';
+				}
 				echo '</ul>';
-	
-				echo '<p>The email address <em>' . $email . '</em> translates to the URL <em>' . $redirects[sizeof($redirects)-1] . '</em></p>';
+
+				if ($response_code == '500' || $response_code =='400') {
+					echo '<p>The email address <em>' . $email . '</em> was unable to be translated into a URL</p>';
+				} else {
+					echo '<p>The email address <em>' . $email . '</em> translates to the URL <em>' . $redirects[sizeof($redirects)-1] . '</em></p>';
+				}
 			}
 		}
 	}
@@ -97,6 +116,8 @@ if (!empty($email)) {
 			<input type="text" id="email" name="email" /><br />
 			<input type="submit" />
 		</form>
+
+		<p>For example, try <a href="?email=will@norris.name">will@norris.name</a> or <a href="?email=david%40sappenin.com">david@sappenin.com</a>.</p>
 
 <?php
 	include '../footer.php';
