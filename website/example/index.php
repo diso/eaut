@@ -2,6 +2,7 @@
 	$page_title = 'EAUT Example';
 	include '../header.php';
 ?>
+<div id="content">
 		<h1>EAUT Example</h1>
 
 <?php
@@ -118,6 +119,8 @@ if (!empty($email)) {
 		</form>
 
 		<p>For example, try <a href="?email=will@norris.name">will@norris.name</a> or <a href="?email=david%40sappenin.com">david@sappenin.com</a>.</p>
+		
+</div> <!-- // #content -->
 
 <?php
 	include '../footer.php';

@@ -8,5 +8,7 @@
 			pageTracker._trackPageview();
 		</script>
 
-	</body>
+</div> <!-- // #page -->
+
+</body>
 </html>
