@@ -2,11 +2,12 @@
 	$page_title = 'Email Address to URL Translation';
 	include './header.php';
 ?>
+
+<div id="content">
 		<h1>Email Address to URL Translation (EAUT)</h1>
 
 		<p>An open protocol to allow standard email addresses to be transformed
 		into URLs for services like OpenID.</p>
-
 
 		<h2>Why?</h2>
 
@@ -21,13 +22,11 @@
 		a method to convert users' email addresses to URLs for use in services
 		such as OpenID authentication.</p>
 
-
 		<h2>How does it work?</h2>
 		
 		<p>EAUT is designed to work in a distributed fashion, so that no one
 		authority controls it.  Every email provider can control how email
 		addresses at their domain are resolved into URLs.</p>
-
 
 		<h2>What happens when translation fails?</h2>
 
@@ -38,6 +37,8 @@
 			href="http://emailtoid.net/" target="_blank">Email to ID</a> is
 		recommended.  The need for any fallback service will diminish as email
 		providers begin to support EAUT natively.</p>
+
+</div> <!-- // #content -->
 
 <?php
 	include './footer.php';

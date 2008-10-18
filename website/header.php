@@ -1,10 +1,17 @@
-<html>
-	<head>
-		<title><?php echo $page_title; ?></title>
-		<link rel="stylesheet" type="text/css" href="/style.css" />
-	</head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
 
-	<body>
+	<title><?php echo $page_title; ?></title>
+	<link rel="stylesheet" href="/inc/css/reset.css" media="screen, projection" type="text/css">
+	<link rel="stylesheet" href="/inc/css/screen.css" media="screen, projection" type="text/css">
+
+</head>
+<body id="eaut-org">
+  <div id="page">
 
 		<ul id="menu">
 			<li><a href="/">EAUT</a></li>
