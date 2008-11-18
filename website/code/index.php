@@ -45,6 +45,33 @@ highlight_string($code);
 			<li><a href="http://eaut.googlecode.com/svn/code/rails/trunk/">Ruby on Rails EAUT Library</a></li>
 		</ul>
 
+		<h2>Java</h2>
+
+		<p>This library incorporates various pre-existing open-source libraries, and provides a Java-based implementation of EAUT (note that it
+		currently utilizes Yadis code for discovery, though this will change once XRDS-Simple becomes finalized)</p>
+
+		<ul>
+					<li>Maven2 Repository<BR>
+						&lt;repository&gt;<BR>
+						&nbsp;&nbsp;&nbsp;&lt;id&gt;sappenin-repo&lt;/id&gt;<BR>
+						&nbsp;&nbsp;&nbsp;&lt;name&gt;Sappenin.com Maven2 Repository&lt;/name&gt;<BR>
+						&nbsp;&nbsp;&nbsp;&lt;url&gt;http://www.sappenin.com/maven2&lt;/url&gt;<BR>
+						&lt;/repository&gt;<BR>
+					</li>
+					<li>Artificats<BR>
+						&lt;groupId&gt;com.sappenin.eaut&lt;/groupId&gt;<BR>
+						&lt;artifactId&gt;eaut4java&lt;/artifactId&gt;<BR>
+						&lt;version&gt;0.0.5&lt;/version&gt;<BR>
+					</li>
+					<li>Example:
+						<div style="margin-left: 1em;">
+							String email = "beth@example.com";<BR>
+							String mappedUrl = new EAUTConsumerImpl().doEAUT(email);<BR>
+						</div>
+					</li>
+			</li>
+		</ul>
+
 </div> <!-- // #content -->
 
 <?php
